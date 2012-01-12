@@ -1,0 +1,101 @@
+name: TeleportSuite
+main: net.krinsoft.teleportsuite.TeleportSuite
+version: 2.0
+author: krinsdeath
+
+commands:
+  # teleport commands
+  tps:
+    aliases: [teleport]
+    description: The basic command and root for all TeleportSuite commands.
+    usage: /<command> [options]...
+  tpa:
+    description: Allows users to request a teleport to another player.
+    usage: /<command> [player]
+  tpahere:
+    description: Allows users to request another user teleport to them.
+    usage: /<command> [player]
+  tp:
+    description: Allows users to teleport directly to another player.
+    usage: /<command> [player]
+  tphere:
+    description: Allows users to teleport a user directly to them.
+    usage: /<command> [player]
+  tpo:
+    description: Teleports the sender directly to the target, regardless of their status.
+    usage: /<command> [player]
+  tpohere:
+    description: Teleports the target directly to the sender, regardless of their status.
+    usage: /<command> [player]
+  tpworld:
+    aliases: [world, tpw]
+    description: Teleports to your last known location in the specified world.
+    usage: /<command> [world]
+  tpaccept:
+    aliases: [accept, tpacc]
+    description: |
+      Accepts an active teleport request from the specified player,
+      or all active requests.
+    usage: /<command> [request] [-all]
+  tpreject:
+    aliases: [reject, tprej]
+    description: |
+      Rejects an active teleport request from the specified player,
+      or all active requests.
+    usage: /<command> [request] [-all]
+  tpcancel:
+    aliases: [cancel, tpcan]
+    description: Cancels your currently active request.
+    usage: /<command>
+  tprequests:
+    aliases: [requests, tpreq]
+    description: Lists your active requests and any pending requests.
+    usage: /<command>
+  tptoggle:
+    aliases: [toggle, tptog]
+    description: |
+      Toggles your 'request' status.
+      "Accepting" means you will be prompted to accept any requests
+      "Rejecting" means you will ignore all requests
+      "Auto" means you will automatically accept all requests
+    usage: /<command> [option]
+  tpsilent:
+    aliases: [silent, tpsil]
+    description: |
+      Toggle. Makes your teleports silent (no broadcast).
+      Applies only to tpo and tpohere.
+    usage: /<command>
+  tpback:
+    aliases: [back, tpb]
+    description: Teleports the sender to their location prior to their last teleport.
+    usage: /<command>
+  tprewind:
+    aliases: [rewind, tprew]
+    description: |
+      Rewinds a specified number of teleports for the target user.
+      Maximum set by config.yml (default 3)
+    usage: /<command> [target] [val]
+    
+
+permissions:
+  teleport.users:
+    children:
+      teleport.tpa: true
+      teleport.tpahere: true
+      teleport.accept: true
+      teleport.reject: true
+      teleport.cancel: true
+      teleport.requests: true
+      teleport.back: true
+      teleport.world: true
+      teleport.world.*: true
+  teleport.mods:
+    children:
+      teleport.user: true
+      teleport.tp: true
+      teleport.tphere: true
+  teleport.admins:
+    children:
+      teleport.mod: true
+      teleport.tpo: true
+      teleport.tpohere: true
