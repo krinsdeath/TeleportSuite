@@ -90,6 +90,7 @@
                 </executions>
                 <configuration>
                     <file>target/classes/plugin.yml</file>
+                    <file>target/classes/config.yml</file>
                     <replacements>
                         <replacement>
                             <token>maven-version-number</token>

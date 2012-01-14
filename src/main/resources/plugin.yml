@@ -2,6 +2,7 @@ name: TeleportSuite
 main: net.krinsoft.teleportsuite.TeleportSuite
 version: 2.0
 author: krinsdeath
+load: startup
 
 commands:
   # teleport commands
@@ -75,8 +76,7 @@ commands:
       Rewinds a specified number of teleports for the target user.
       Maximum set by config.yml (default 3)
     usage: /<command> [target] [val]
-    
-
+  # warp commands
 permissions:
   teleport.users:
     children:
@@ -97,5 +97,7 @@ permissions:
   teleport.admins:
     children:
       teleport.mod: true
+      teleport.silent: true
+      teleport.rewind: true
       teleport.tpo: true
       teleport.tpohere: true

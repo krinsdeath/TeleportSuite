@@ -1,0 +1,30 @@
+plugin:
+  debug: false
+  version: maven-version-number
+  cooldowns: false
+  economy: false
+
+localizations:
+  available:
+  - english
+  default: english
+
+cooldowns:
+  tp: 30
+  tpa: 60
+  tpo: 15
+  tphere: 30
+  tpahere: 60
+  tpohere: 15
+  tpback: 15
+  tpworld: 30
+
+economy:
+  tp: 1
+  tpa: 1
+  tpo: 0
+  tphere: 1
+  tpahere: 1
+  tpohere: 0
+  tpback: 1
+  tpworld: 1

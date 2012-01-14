@@ -1,0 +1,33 @@
+error:
+  permission: "&CYou don't have permission to do that!"
+  invalid:
+    player: "&CThe player '[target]' doesn't exist."
+    world: "&CThe world '[target]' doesn't exist."
+    destination: "&CThat destination is unreachable."
+  requests:
+    open: "&CYou can only request one teleport at a time."
+    ignored: "&C[target] is not accepting requests."
+    canceled: "&C[target] canceled their request."
+    failed: "&CYou have no requests from [target]."
+
+teleport:
+  tp: "&A[target] teleported to you."
+  tpa: "&B[target] teleported to you."
+  tpo: "&D[target] teleported to you."
+  tphere: "&AYou teleported to [target]." 
+  tpahere: "&BYou teleported to [target]."
+  tpohere: "&DYou teleported to [target]."
+  tpback: "&AYou are now standing where you once were..."
+  tpworld: "&AYou are now standing in [target]."
+  tpaccept: "&A You accepted the request from [target]."
+  tpreject: "&CYou denied the request from [target]."
+  tpcancel: "&7You canceled your request to [target]."
+
+status:
+  silent:
+    on: "&6You are now stealthed."
+    off: "&6You are no longer stealthed."
+  toggle:
+    accepting: "&9You will now be prompted to accept teleport requests."
+    rejecting: "&9You will automatically reject all requests."
+    auto: "&9You will automatically accept all requests."
