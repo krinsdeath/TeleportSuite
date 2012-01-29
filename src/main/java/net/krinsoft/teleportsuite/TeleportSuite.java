@@ -3,16 +3,21 @@ package net.krinsoft.teleportsuite;
 import com.fernferret.allpay.AllPay;
 import com.fernferret.allpay.GenericBank;
 import com.pneumaticraft.commandhandler.CommandHandler;
-import net.krinsoft.teleportsuite.commands.PermissionHandler;
-import net.krinsoft.teleportsuite.commands.TPACommand;
+import net.krinsoft.teleportsuite.commands.*;
 import net.krinsoft.teleportsuite.listeners.EntityListener;
 import net.krinsoft.teleportsuite.listeners.PlayerListener;
 import net.krinsoft.teleportsuite.listeners.ServerListener;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -23,7 +28,12 @@ public class TeleportSuite extends JavaPlugin {
     private final static Logger LOGGER = Logger.getLogger("TeleportSuite");
     private boolean debug = true;
     private boolean economy = false;
+
+    private Map<String, Localization> languages = new HashMap<String, Localization>();
+    private FileConfiguration users;
     
+    private TeleportManager manager;
+
     private GenericBank bank = null;
     
     private EntityListener eListener = new EntityListener(this);
@@ -35,6 +45,9 @@ public class TeleportSuite extends JavaPlugin {
     @Override
     public void onEnable() {
         long startup = System.currentTimeMillis();
+        
+        manager = new TeleportManager(this);
+        
         if (!validateCommandHandler()) {
             getServer().getPluginManager().disablePlugin(this);
             return;
@@ -56,6 +69,14 @@ public class TeleportSuite extends JavaPlugin {
         log("Disabled TeleportSuite in " + (System.currentTimeMillis() - disable) + "ms");
     }
     
+    @Override
+    public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+        debug("[Command] " + cs.getName() + ": /" + label + " " + Arrays.toString(args));
+        List<String> arguments = new ArrayList<String>(Arrays.asList(args));
+        arguments.add(0, label);
+        return commands.locateAndRunCommand(cs, arguments);
+    }
+    
     public void log(String message) {
         message = "[" + this + "] " + message;
         LOGGER.info(message);
@@ -74,37 +95,71 @@ public class TeleportSuite extends JavaPlugin {
     }
     
     private void registerConfiguration() {
-        if (getConfig().get("plugin.version") == null || getConfig().getBoolean("plugin.rebuild")) {
-            getConfig().setDefaults(YamlConfiguration.loadConfiguration(this.getClass().getResourceAsStream("/config.yml")));
-            getConfig().options().copyDefaults(true);
-            saveConfig();
-        }
+        getConfig().setDefaults(YamlConfiguration.loadConfiguration(this.getClass().getResourceAsStream("/config.yml")));
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+        
+        getUsers().setDefaults(YamlConfiguration.loadConfiguration(this.getClass().getResourceAsStream("/users.yml")));
+        getUsers().options().copyDefaults(true);
+        saveUsers();
+        
+        buildLocalizations();
+        
         debug = getConfig().getBoolean("plugin.debug");
         economy = getConfig().getBoolean("plugin.economy");
+    }
+    
+    private void buildLocalizations() {
+        for (String language : getConfig().getStringList("localizations.available")) {
+            InputStream in = this.getClass().getResourceAsStream("/"+language+".yml");
+            if (in != null) {
+                FileConfiguration lang = YamlConfiguration.loadConfiguration(in);
+                lang.setDefaults(YamlConfiguration.loadConfiguration(new File(getDataFolder(), language+".yml")));
+                lang.options().copyDefaults(true);
+                languages.put(language, new Localization(this, lang));
+            }
+        }
+    }
+    
+    public Localization getLocalization(String language) {
+        if (languages.containsKey(language)) {
+            return languages.get(language);
+        } else {
+            return languages.get(getConfig().getString("localizations.default"));
+        }
     }
     
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
         
         // entity events
-        pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Event.Priority.Monitor, this);
+        pm.registerEvents(eListener, this);
         
         // player events
-        pm.registerEvent(Event.Type.PLAYER_JOIN, pListener, Event.Priority.Monitor, this);
-        pm.registerEvent(Event.Type.PLAYER_QUIT, pListener, Event.Priority.Monitor, this);
-        pm.registerEvent(Event.Type.PLAYER_KICK, pListener, Event.Priority.Monitor, this);
-        pm.registerEvent(Event.Type.PLAYER_TELEPORT, pListener, Event.Priority.Monitor, this);
-        
+        pm.registerEvents(pListener, this);
+
         // server events
-        pm.registerEvent(Event.Type.PLUGIN_ENABLE, sListener, Event.Priority.Monitor, this);
-        pm.registerEvent(Event.Type.PLUGIN_DISABLE, sListener, Event.Priority.Monitor, this);
+        pm.registerEvents(sListener, this);
     }
     
     private void registerCommands() {
         PermissionHandler permissions = new PermissionHandler(this);
         commands = new CommandHandler(this, permissions);
         commands.registerCommand(new TPACommand(this));
-        //
+        commands.registerCommand(new TPAHereCommand(this));
+        commands.registerCommand(new TPCommand(this));
+        commands.registerCommand(new TPHereCommand(this));
+        commands.registerCommand(new TPOCommand(this));
+        commands.registerCommand(new TPOHereCommand(this));
+        commands.registerCommand(new TPWorldCommand(this));
+        commands.registerCommand(new TPAcceptCommand(this));
+        commands.registerCommand(new TPRejectCommand(this));
+        //commands.registerCommand(new TPCancelCommand(this));
+        //commands.registerCommand(new TPSilentCommand(this));
+        //commands.registerCommand(new TPToggleCommand(this));
+        //commands.registerCommand(new TPRequestsCommand(this));
+        //commands.registerCommand(new TPBackCommand(this));
+        //commands.registerCommand(new TPRewindCommand(this));
     }
 
     private boolean validateCommandHandler() {
@@ -127,6 +182,7 @@ public class TeleportSuite extends JavaPlugin {
     
     public boolean validateAllPay() {
         if (economy) {
+            if (bank != null) { return true; }
             double APVersion = 3.1;
             AllPay allpay = new AllPay(this, "[" + this + "] ");
             if (allpay.getVersion() >= APVersion) {
@@ -140,6 +196,22 @@ public class TeleportSuite extends JavaPlugin {
         return false;
     }
     
+    public FileConfiguration getUsers() {
+        if (users == null) {
+            users = YamlConfiguration.loadConfiguration(new File(getDataFolder(),  "users.yml"));
+        }
+        return users;
+    }
+
+    public void saveUsers() {
+        try {
+            users.save(new File(getDataFolder(), "users.yml"));
+        } catch (IOException e) {
+            debug("An error occurred while saving 'users.yml'");
+            e.printStackTrace();
+        }
+    }
+    
     public boolean validateAllPay(boolean val) {
         if (!val) {
             bank = null;
@@ -151,6 +223,15 @@ public class TeleportSuite extends JavaPlugin {
     
     public GenericBank getBank() {
         if (!economy) { return null; }
+        validateAllPay();
         return bank;
+    }
+    
+    public TeleportManager getManager() {
+        return manager;
+    }
+    
+    public CommandHandler getHandler() {
+        return commands;
     }
 }

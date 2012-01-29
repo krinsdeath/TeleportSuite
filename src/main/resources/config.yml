@@ -1,6 +1,6 @@
 plugin:
   debug: false
-  version: maven-version-number
+  version: ${project.version}
   cooldowns: false
   economy: false
 

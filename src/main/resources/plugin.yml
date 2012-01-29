@@ -1,6 +1,6 @@
 name: TeleportSuite
 main: net.krinsoft.teleportsuite.TeleportSuite
-version: 2.0
+version: ${project.version}
 author: krinsdeath
 load: startup
 
@@ -31,7 +31,7 @@ commands:
   tpworld:
     aliases: [world, tpw]
     description: Teleports to your last known location in the specified world.
-    usage: /<command> [world]
+    usage: /<command> [world] [-s]
   tpaccept:
     aliases: [accept, tpacc]
     description: |

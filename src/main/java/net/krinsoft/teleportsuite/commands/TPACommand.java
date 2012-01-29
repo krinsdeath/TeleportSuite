@@ -1,5 +1,6 @@
 package net.krinsoft.teleportsuite.commands;
 
+import net.krinsoft.teleportsuite.Request;
 import net.krinsoft.teleportsuite.TeleportSuite;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -24,12 +25,6 @@ public class TPACommand extends TeleportCommand {
     }
     
     public void runCommand(CommandSender sender, List<String> args) {
-        CommandSender[] checked = check(sender, args.get(0));
-        if (checked[0] == null) {
-            plugin.log("Consoles can't teleport!");
-        }
-        if (checked[1] == null) {
-
-        }
+        super.runTeleport(sender, args, Request.Type.TPA);
     }
 }

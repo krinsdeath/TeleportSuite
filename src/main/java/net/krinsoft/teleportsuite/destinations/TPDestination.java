@@ -7,9 +7,11 @@ import org.bukkit.Location;
  * @author krinsdeath
  */
 public class TPDestination {
+    private TeleportSuite plugin;
     private Location location;
 
     public TPDestination(TeleportSuite plugin, String world, String loc) {
+        this.plugin = plugin;
         String[] locs = loc.split(":");
         try {
             location = new Location(plugin.getServer().getWorld(world), Double.parseDouble(locs[0]), Double.parseDouble(locs[1]), Double.parseDouble(locs[2]));
@@ -22,7 +24,8 @@ public class TPDestination {
         }
     }
     
-    public TPDestination(Location loc) {
+    public TPDestination(TeleportSuite plugin, Location loc) {
+        this.plugin = plugin;
         location = loc;
     }
 
@@ -34,7 +37,7 @@ public class TPDestination {
         location = loc;
     }
     
-    public void setDestination(TeleportSuite plugin, String loc) {
+    public void setDestination(String loc) {
         String[] locs = loc.split(":");
         try {
             String world = locs[0];

@@ -9,6 +9,7 @@ error:
     ignored: "&C[target] is not accepting requests."
     canceled: "&C[target] canceled their request."
     failed: "&CYou have no requests from [target]."
+    none: "&CYou have no open requests."
 
 teleport:
   tp: "&A[target] teleported to you."
@@ -19,11 +20,16 @@ teleport:
   tpohere: "&DYou teleported to [target]."
   tpback: "&AYou are now standing where you once were..."
   tpworld: "&AYou are now standing in [target]."
-  tpaccept: "&A You accepted the request from [target]."
+  tpaccept: "&AYou accepted the request from [target]."
   tpreject: "&CYou denied the request from [target]."
   tpcancel: "&7You canceled your request to [target]."
+  tprequest: "&6You sent a request to [target]."
+  requests:
+    tpa: "&A[target] wants to teleport to you. (&B/tpaccept [target]&A)"
+    tpahere: "&A[target] wants you to teleport to them. (&B/tpaccept [target]&A)"
 
 status:
+  default: acceptinga
   silent:
     on: "&6You are now stealthed."
     off: "&6You are no longer stealthed."
