@@ -50,8 +50,10 @@ commands:
     usage: /<command>
   tprequests:
     aliases: [requests, tpreq]
-    description: Lists your active requests and any pending requests.
-    usage: /<command>
+    description: |
+      Lists your active requests and any pending requests.
+      Usable from Console
+    usage: /<command> [target]
   tptoggle:
     aliases: [toggle, tptog]
     description: |
@@ -59,7 +61,7 @@ commands:
       "Accepting" means you will be prompted to accept any requests
       "Rejecting" means you will ignore all requests
       "Auto" means you will automatically accept all requests
-    usage: /<command> [option]
+    usage: /<command> -[acc|rej|auto]
   tpsilent:
     aliases: [silent, tpsil]
     description: |
@@ -74,8 +76,16 @@ commands:
     aliases: [rewind, tprew]
     description: |
       Rewinds a specified number of teleports for the target user.
-      Maximum set by config.yml (default 3)
+      Maximum set by config.yml (default 5)
+      Usable from Console
     usage: /<command> [target] [val]
+  # legacy vanilla /tp
+  tpvanilla:
+    aliases: [vanilla, tpv]
+    description: |
+      Teleports the first player to the second player.
+      Usable from Console
+    usage: /<command> [player from] [player to]
   # warp commands
 permissions:
   teleport.users:
@@ -94,6 +104,7 @@ permissions:
       teleport.user: true
       teleport.tp: true
       teleport.tphere: true
+      teleport.vanilla: true
   teleport.admins:
     children:
       teleport.mod: true

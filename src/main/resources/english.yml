@@ -1,11 +1,13 @@
 error:
-  permission: "&CYou don't have permission to do that!"
+  permission: "&CYou don't have permission to do that.. node: &B[target]"
   invalid:
+    arguments: "&CInvalid arguments."
     player: "&CThe player '[target]' doesn't exist."
     world: "&CThe world '[target]' doesn't exist."
     destination: "&CThat destination is unreachable."
   requests:
     open: "&CYou can only request one teleport at a time."
+    rejected: "&C[target] rejected your request."
     ignored: "&C[target] is not accepting requests."
     canceled: "&C[target] canceled their request."
     failed: "&CYou have no requests from [target]."
@@ -20,20 +22,24 @@ teleport:
   tpohere: "&DYou teleported to [target]."
   tpback: "&AYou are now standing where you once were..."
   tpworld: "&AYou are now standing in [target]."
-  tpaccept: "&AYou accepted the request from [target]."
-  tpreject: "&CYou denied the request from [target]."
-  tpcancel: "&7You canceled your request to [target]."
+  tpaccept: "&9You &Aaccepted&9 the request from [target]."
+  tpreject: "&9You &Crejected&9 the request from [target]."
+  tpcancel: "&7You &Ccanceled&7 your request to [target]."
   tprequest: "&6You sent a request to [target]."
+  tprewind: "&6Rewinding &A[target]&6 locations."
   requests:
     tpa: "&A[target] wants to teleport to you. (&B/tpaccept [target]&A)"
     tpahere: "&A[target] wants you to teleport to them. (&B/tpaccept [target]&A)"
 
 status:
-  default: acceptinga
   silent:
-    on: "&6You are now stealthed."
-    off: "&6You are no longer stealthed."
+    enabled: "&6You are now stealthed."
+    disabled: "&6You are no longer stealthed."
   toggle:
-    accepting: "&9You will now be prompted to accept teleport requests."
-    rejecting: "&9You will automatically reject all requests."
-    auto: "&9You will automatically accept all requests."
+    default: accepting
+    accepting: "&9You will now be &Bprompted&9 to accept teleport requests."
+    rejecting: "&9You will automatically &Creject&9 all requests."
+    auto: "&9You will automatically &Aaccept&9 all requests."
+  requests:
+    open: "&9You have the following &Apending&9 requests: "
+    active: "&9You have sent a request to &A[target]&9."

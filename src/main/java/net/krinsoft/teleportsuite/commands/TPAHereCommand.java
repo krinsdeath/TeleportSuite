@@ -25,6 +25,6 @@ public class TPAHereCommand extends TeleportCommand {
     }
 
     public void runCommand(CommandSender sender, List<String> args) {
-        super.runTeleport(sender, args, Request.Type.TPAHERE);
+        super.runTeleport(sender, args.get(0), Request.Type.TPAHERE);
     }
 }

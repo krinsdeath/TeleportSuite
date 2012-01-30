@@ -32,7 +32,6 @@ public class TPAcceptCommand extends TeleportCommand {
 
     @Override
     public void runCommand(CommandSender sender, List<String> args) {
-        if (!verifyWallet(sender)) { return; }
         TeleportPlayer p = manager.getPlayer(sender.getName());
         Request r = null;
         if (args.size() == 0) {

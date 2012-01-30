@@ -30,16 +30,13 @@ public class TPWorldCommand extends TeleportCommand {
 
     @Override
     public void runCommand(CommandSender sender, List<String> args) {
+        if (!verifyWallet(sender, "tpworld")) { return; }
         String world = args.get(0);
         boolean spawn = false;
         TeleportPlayer p = manager.getPlayer(sender.getName());
         if (args.get(0).equals("-s")) {
             world = p.getLocation().getWorld().getName();
             spawn = true;
-        }
-        if (!sender.hasPermission("teleport.world." + args.get(0))) {
-            p.sendLocalizedString("error.permission", p.getName());
-            return;
         }
         if (args.size() == 2) {
             if (plugin.getServer().getWorld(args.get(0)) != null) {

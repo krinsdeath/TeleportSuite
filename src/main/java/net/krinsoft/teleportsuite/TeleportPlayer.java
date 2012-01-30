@@ -36,19 +36,28 @@ public class TeleportPlayer {
     private List<TPDestination> stack = new ArrayList<TPDestination>();
     private List<Request> requests = new ArrayList<Request>();
     private String language;
-    private boolean silent;
+    private String request;
     private boolean requesting;
+    private boolean silent;
     private Status status;
     
     public TeleportPlayer(TeleportSuite plugin, String name) {
         this.plugin = plugin;
         this.ref = plugin.getServer().getPlayer(name);
-        this.status = Status.fromName(plugin.getUsers().getString(name + ".status"));
         this.language = plugin.getUsers().getString(name + ".language");
         if (this.language == null) {
-            this.language = plugin.getConfig().getString("localizations.default");
+            this.language = plugin.getConfig().getString("languages.default");
         }
+        String tmp = plugin.getUsers().getString(name + ".status");
+        if (tmp == null) {
+            tmp = plugin.getLocalization(language).get("status.toggle.default", name);
+        }
+        this.status = Status.fromName(tmp);
         this.stack.clear();
+    }
+    
+    public Player getReference() {
+        return ref;
     }
     
     public String getName() {
@@ -69,6 +78,8 @@ public class TeleportPlayer {
      * @return the player's new location 
      */
     public TPDestination rewind() {
+        sendLocalizedString("teleport.tpback", getName());
+        if (stack.isEmpty()) { return null; }
         ref.teleport(stack.get(0).getLocation());
         return stack.remove(0);
     }
@@ -80,11 +91,14 @@ public class TeleportPlayer {
      */
     public List<TPDestination> rewind(int places) {
         if (places > 5) { places = 5; }
+        if (stack.isEmpty()) { return stack; }
+        if (places > stack.size()) { places = stack.size(); }
         List<TPDestination> list = new ArrayList<TPDestination>();
         for (int i = 0; i < places; i++) {
             if (stack.isEmpty()) { break; }
             list.add(stack.remove(0));
         }
+        sendLocalizedString("teleport.tprewind", String.valueOf(places));
         ref.teleport(list.get(list.size() - 1).getLocation());
         return list;
     }
@@ -101,6 +115,7 @@ public class TeleportPlayer {
     }
     
     public void sendMessage(String message) {
+        if (message == null) { return; }
         ref.sendMessage(message);
     }
     
@@ -116,9 +131,9 @@ public class TeleportPlayer {
     public void toggleSilence() {
         silent = !silent;
         if (!silent) {
-            sendLocalizedString("status.silent.off", getName());
+            sendLocalizedString("status.silent.disabled", getName());
         } else {
-            sendLocalizedString("status.silent.on", getName());
+            sendLocalizedString("status.silent.enabled", getName());
         }
     }
 
@@ -126,8 +141,13 @@ public class TeleportPlayer {
         return requesting;
     }
 
-    public void setRequesting(boolean val) {
+    public void setRequesting(String name, boolean val) {
+        request = name;
         requesting = val;
+    }
+    
+    public String getActive() {
+        return this.request;
     }
     
     public Status getStatus() {
@@ -135,6 +155,7 @@ public class TeleportPlayer {
     }
     
     public void setStatus(Status s) {
+        sendLocalizedString("status.toggle." + s.getName(), this.getName());
         this.status = s;
     }
     
@@ -153,6 +174,20 @@ public class TeleportPlayer {
             }
         }
         return null;
+    }
+    
+    public void cancelRequest() {
+        if (request != null) {
+            TeleportPlayer p = plugin.getManager().getPlayer(request);
+            Request r = p.getRequest(this.getName());
+            if (r != null) {
+                p.getRequests().remove(r);
+                p.sendLocalizedString("error.requests.canceled", this.getName());
+            }
+            sendLocalizedString("teleport.tpcancel", request);
+            request = null;
+            requesting = false;
+        }
     }
     
 }

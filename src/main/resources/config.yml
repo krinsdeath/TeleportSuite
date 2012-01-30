@@ -1,10 +1,12 @@
+# economy.currency: -1 for money, 0-255 for an item ID
+
 plugin:
-  debug: false
+  debug: true
   version: ${project.version}
   cooldowns: false
-  economy: false
+  economy: true
 
-localizations:
+languages:
   available:
   - english
   default: english
@@ -20,6 +22,7 @@ cooldowns:
   tpworld: 30
 
 economy:
+  currency: -1
   tp: 1
   tpa: 1
   tpo: 0

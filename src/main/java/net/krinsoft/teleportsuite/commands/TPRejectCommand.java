@@ -6,6 +6,7 @@ import net.krinsoft.teleportsuite.TeleportSuite;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +32,6 @@ public class TPRejectCommand extends TeleportCommand {
 
     @Override
     public void runCommand(CommandSender sender, List<String> args) {
-        if (!verifyWallet(sender)) { return; }
         TeleportPlayer p = manager.getPlayer(sender.getName());
         Request r = null;
         if (args.size() == 0) {
@@ -43,7 +43,7 @@ public class TPRejectCommand extends TeleportCommand {
             }
         } else {
             if (args.get(0).equals("-all") && !p.getRequests().isEmpty()) {
-                for (Request req : p.getRequests()) {
+                for (Request req : new ArrayList<Request>(p.getRequests())) {
                     manager.finish(p, req, false);
                 }
                 return;

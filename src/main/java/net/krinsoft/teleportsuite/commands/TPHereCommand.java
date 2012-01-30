@@ -25,6 +25,6 @@ public class TPHereCommand extends TeleportCommand {
     }
 
     public void runCommand(CommandSender sender, List<String> args) {
-        super.runTeleport(sender, args, Request.Type.TPHERE);
+        super.runTeleport(sender, args.get(0), Request.Type.TPHERE);
     }
 }

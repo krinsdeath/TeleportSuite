@@ -14,7 +14,7 @@ public class TPDestination {
         this.plugin = plugin;
         String[] locs = loc.split(":");
         try {
-            location = new Location(plugin.getServer().getWorld(world), Double.parseDouble(locs[0]), Double.parseDouble(locs[1]), Double.parseDouble(locs[2]));
+            location = new Location(plugin.getServer().getWorld(world), Double.parseDouble(locs[0]), Double.parseDouble(locs[1])+0.1, Double.parseDouble(locs[2]));
         } catch (ArrayIndexOutOfBoundsException e) {
             plugin.debug("An error occurred while parsing a location string.");
         } catch (NumberFormatException e) {
@@ -27,6 +27,7 @@ public class TPDestination {
     public TPDestination(TeleportSuite plugin, Location loc) {
         this.plugin = plugin;
         location = loc;
+        location.setY(location.getY()+0.1);
     }
 
     public Location getLocation() {

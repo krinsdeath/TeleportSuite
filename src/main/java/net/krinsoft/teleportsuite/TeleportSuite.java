@@ -94,13 +94,30 @@ public class TeleportSuite extends JavaPlugin {
         }
     }
     
+    public void toggleDebug(CommandSender sender) {
+        debug = !debug;
+        getConfig().set("plugin.debug", debug);
+        saveConfig();
+        if (debug) {
+            log("Debug mode enabled.");
+            sender.sendMessage("Debug mode enabled.");
+        } else {
+            log("Debug mode disabled.");
+            sender.sendMessage("Debug mode disabled.");
+        }
+    }
+    
     private void registerConfiguration() {
         getConfig().setDefaults(YamlConfiguration.loadConfiguration(this.getClass().getResourceAsStream("/config.yml")));
-        getConfig().options().copyDefaults(true);
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            getConfig().options().copyDefaults(true);
+        }
         saveConfig();
         
         getUsers().setDefaults(YamlConfiguration.loadConfiguration(this.getClass().getResourceAsStream("/users.yml")));
-        getUsers().options().copyDefaults(true);
+        if (!new File(getDataFolder(), "users.yml").exists()) {
+            getUsers().options().copyDefaults(true);
+        }
         saveUsers();
         
         buildLocalizations();
@@ -110,22 +127,29 @@ public class TeleportSuite extends JavaPlugin {
     }
     
     private void buildLocalizations() {
-        for (String language : getConfig().getStringList("localizations.available")) {
+        for (String language : getConfig().getStringList("languages.available")) {
+            File f = new File(getDataFolder(), language+".yml");
             InputStream in = this.getClass().getResourceAsStream("/"+language+".yml");
             if (in != null) {
-                FileConfiguration lang = YamlConfiguration.loadConfiguration(in);
-                lang.setDefaults(YamlConfiguration.loadConfiguration(new File(getDataFolder(), language+".yml")));
-                lang.options().copyDefaults(true);
-                languages.put(language, new Localization(this, lang));
+                FileConfiguration lang = YamlConfiguration.loadConfiguration(f);
+                lang.setDefaults(YamlConfiguration.loadConfiguration(in));
+                if (!f.exists()) {
+                    lang.options().copyDefaults(true);
+                }
+                languages.put(language, new Localization(this, language+".yml", lang));
             }
+        }
+        for (Localization l : languages.values()) {
+            l.save();
         }
     }
     
     public Localization getLocalization(String language) {
+        if (language == null) { language = getConfig().getString("languages.default"); }
         if (languages.containsKey(language)) {
             return languages.get(language);
         } else {
-            return languages.get(getConfig().getString("localizations.default"));
+            return languages.get(getConfig().getString("languages.default"));
         }
     }
     
@@ -154,12 +178,15 @@ public class TeleportSuite extends JavaPlugin {
         commands.registerCommand(new TPWorldCommand(this));
         commands.registerCommand(new TPAcceptCommand(this));
         commands.registerCommand(new TPRejectCommand(this));
-        //commands.registerCommand(new TPCancelCommand(this));
-        //commands.registerCommand(new TPSilentCommand(this));
-        //commands.registerCommand(new TPToggleCommand(this));
-        //commands.registerCommand(new TPRequestsCommand(this));
-        //commands.registerCommand(new TPBackCommand(this));
-        //commands.registerCommand(new TPRewindCommand(this));
+        commands.registerCommand(new TPCancelCommand(this));
+        commands.registerCommand(new TPSilentCommand(this));
+        commands.registerCommand(new TPToggleCommand(this));
+        commands.registerCommand(new TPRequestsCommand(this));
+        commands.registerCommand(new TPBackCommand(this));
+        commands.registerCommand(new TPRewindCommand(this));
+        commands.registerCommand(new TPVanillaCommand(this));
+        commands.registerCommand(new TPDebugCommand(this));
+        //commands.registerCommand(new TPGroupCommand(this));
     }
 
     private boolean validateCommandHandler() {

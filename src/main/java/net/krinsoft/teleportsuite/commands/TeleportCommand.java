@@ -16,8 +16,7 @@ public abstract class TeleportCommand extends Command {
     protected TeleportManager manager;
     protected Localization locs;
     
-    protected double amount;
-    protected int type;
+    protected int curr;
     private boolean economy = false;
     
     public TeleportCommand(TeleportSuite plugin) {
@@ -25,6 +24,7 @@ public abstract class TeleportCommand extends Command {
         this.plugin = plugin;
         this.manager = plugin.getManager();
         this.economy = plugin.getBank() != null;
+        this.curr = plugin.getConfig().getInt("economy.currency", -1);
     }
 
     protected CommandSender[] check(CommandSender sender, String target) {
@@ -42,16 +42,23 @@ public abstract class TeleportCommand extends Command {
         return checked;
     }
     
-    protected boolean verifyWallet(CommandSender sender) {
+    protected boolean verifyWallet(CommandSender sender, String type) {
         Player player = plugin.getServer().getPlayer(sender.getName());
         if (player == null) { return false; }
         if (!economy) { return true; }
-        return plugin.getBank().hasEnough(player, amount, type);
+        double amount = plugin.getConfig().getDouble("economy." + type, 0);
+        if (plugin.getBank().hasEnough(player, amount, curr)) {
+            plugin.debug("'" + player.getName() + "' has enough currency.");
+            return true;
+        } else {
+            plugin.debug("'" + player.getName() + "' doesn't have enough currency.");
+            return false;
+        }
     }
     
-    protected void runTeleport(CommandSender sender, List<String> args, Request.Type type) {
-        if (!verifyWallet(sender)) { return; }
-        CommandSender[] checked = check(sender, args.get(0));
+    protected void runTeleport(CommandSender sender, String arg, Request.Type type) {
+        if (!verifyWallet(sender, type.getName())) { return; }
+        CommandSender[] checked = check(sender, arg);
         if (checked == null) { return; }
         TeleportPlayer from = manager.getPlayer(checked[0].getName());
         TeleportPlayer to = manager.getPlayer(checked[1].getName());

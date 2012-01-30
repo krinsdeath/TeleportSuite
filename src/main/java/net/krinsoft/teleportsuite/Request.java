@@ -10,7 +10,11 @@ public class Request {
         TP,
         TPHERE,
         TPO,
-        TPOHERE
+        TPOHERE;
+        
+        public String getName() {
+            return name().toLowerCase();
+        }
     }
     
     TeleportPlayer dest;
@@ -21,9 +25,9 @@ public class Request {
         this.type = request;
     }
     
-    TeleportPlayer getTo() { return this.dest; }
+    public TeleportPlayer getTo() { return this.dest; }
     
-    Type getType() { return this.type; }
+    public Type getType() { return this.type; }
     
     @Override
     public boolean equals(Object that) {

@@ -1,11 +1,9 @@
 package net.krinsoft.teleportsuite;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,19 +48,24 @@ public class TeleportManager {
     }
 
     public void queue(TeleportPlayer from, TeleportPlayer to, Request.Type type) {
+        if (!from.getReference().hasPermission("teleport.world." + to.getLocation().getWorld().getName())) {
+            from.sendLocalizedString("error.permission", "teleport.world." + to.getLocation().getWorld().getName());
+            return;
+        }
         if (from.equals(to)) { return; }
         if (type == Request.Type.TPA || type == Request.Type.TPAHERE) {
             if (from.isRequesting()) { return; }
             Request req = new Request(from, type);
             if (!to.getRequests().contains(req)) {
                 if (to.getStatus() == TeleportPlayer.Status.REJECTING) {
-                    from.sendLocalizedString("teleport.tpreject", to.getName());
+                    from.sendLocalizedString("error.requests.ignored", to.getName());
                     return;
                 } else if (to.getStatus() == TeleportPlayer.Status.AUTO) {
                     switch (type) {
                         case TPA: executeTPA(from, to); break;
                         case TPAHERE: executeTPA(to, from); break;
                     }
+                    deductFunds(from, req.getType().getName());
                     return;
                 }
                 from.sendLocalizedString("teleport.tprequest", to.getName());
@@ -70,12 +73,12 @@ public class TeleportManager {
                     case TPA : to.sendLocalizedString("teleport.requests.tpa", from.getName()); break;
                     case TPAHERE : to.sendLocalizedString("teleport.requests.tpahere", from.getName()); break;
                 }
-                from.setRequesting(true);
+                from.setRequesting(to.getName(), true);
                 to.getRequests().add(req);
             }
         } else {
             if (to.getStatus() == TeleportPlayer.Status.REJECTING && (type == Request.Type.TP || type == Request.Type.TPHERE)) {
-                from.sendLocalizedString("teleport.tpreject", to.getName());
+                from.sendLocalizedString("error.requests.ignored", to.getName());
                 return;
             }
             switch (type) {
@@ -86,6 +89,7 @@ public class TeleportManager {
                 case TPHERE: executeTP(to, from); break;
                 case TPOHERE: executeTPO(to, from); break;
             }
+            deductFunds(from, type.getName());
         }
     }
 
@@ -102,11 +106,13 @@ public class TeleportManager {
                 case TP: executeTP(request.getTo(), from); break;
                 case TPO: executeTPO(request.getTo(), from); break;
             }
+            deductFunds(request.getTo(), request.getType().getName());
         } else {
             from.sendLocalizedString("teleport.tpreject", request.getTo().getName());
+            request.getTo().sendLocalizedString("error.requests.rejected", from.getName());
         }
         from.getRequests().remove(request);
-        request.getTo().setRequesting(false);
+        request.getTo().setRequesting(null, false);
     }
     
     private void executeTPA(TeleportPlayer from, TeleportPlayer to) {
@@ -145,7 +151,16 @@ public class TeleportManager {
             player.teleport(plugin.getServer().getWorld(world).getSpawnLocation());
         }
         player.sendLocalizedString("teleport.tpworld", world);
+        deductFunds(player, "tpworld");
         return true;
+    }
+    
+    private void deductFunds(TeleportPlayer p, String key) {
+        if (plugin.getBank() != null) {
+            double amount = plugin.getConfig().getDouble("economy." + key);
+            int curr = plugin.getConfig().getInt("economy.currency");
+            plugin.getBank().take(p.getReference(), amount, curr);
+        }
     }
     
     public void setWorldLastKnown(String player, Location l) {

@@ -2,6 +2,8 @@ package net.krinsoft.teleportsuite;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 /**
@@ -12,10 +14,12 @@ public class Localization {
     private final Pattern target = Pattern.compile("\\[target\\]");
 
     private TeleportSuite plugin;
+    private String name;
     private FileConfiguration language;
     
-    public Localization(TeleportSuite plugin, FileConfiguration language) {
+    public Localization(TeleportSuite plugin, String name, FileConfiguration language) {
         this.plugin = plugin;
+        this.name = name;
         this.language = language;
     }
     
@@ -32,19 +36,13 @@ public class Localization {
         }
         return null;
     }
-    
-    public String error(String key, String token) {
+
+    public void save() {
         try {
-            String replaced = language.getString("errors." + key);
-            if (replaced != null) {
-                replaced = target.matcher(replaced).replaceAll(token);
-                replaced = colors.matcher(replaced).replaceAll("\u00A7$1");
-            }
-            return replaced;
-        } catch (NullPointerException e) {
-            plugin.debug("Encountered null path at 'errors." + key + "'");
+            language.save(new File(plugin.getDataFolder(), name));
+        } catch (IOException e) {
+            plugin.debug("Error saving language file '" + name + "'");
         }
-        return null;
     }
 
 }

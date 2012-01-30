@@ -17,7 +17,7 @@ public class TPCommand extends TeleportCommand {
         setName("TeleportSuite: TP");
         setCommandUsage("/tp [PLAYER]");
         addCommandExample("/tp krinsdeath - Teleport directly to krinsdeath.");
-        setArgRange(1, 1);
+        setArgRange(1, 2);
         addKey("teleport tp");
         addKey("tps tp");
         addKey("tp");
@@ -25,6 +25,12 @@ public class TPCommand extends TeleportCommand {
     }
 
     public void runCommand(CommandSender sender, List<String> args) {
-        super.runTeleport(sender, args, Request.Type.TP);
+        CommandSender from = sender;
+        String to = args.get(0);
+        if (args.size() == 2 && plugin.getServer().getPlayer(args.get(0)) != null) {
+            from = plugin.getServer().getPlayer(args.get(0));
+            to = args.get(1);
+        }
+        super.runTeleport(from, to, Request.Type.TP);
     }
 }
