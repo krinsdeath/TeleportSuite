@@ -112,6 +112,15 @@ public class TeleportSuite extends JavaPlugin {
         if (!new File(getDataFolder(), "config.yml").exists()) {
             getConfig().options().copyDefaults(true);
         }
+        if (getConfig().getString("plugin.version").equalsIgnoreCase("1.2-b62")) {
+            getConfig().set("plugin", null);
+            getConfig().set("teleport", null);
+            getConfig().set("request", null);
+            getConfig().set("error", null);
+            getConfig().set("message", null);
+            getConfig().setDefaults(YamlConfiguration.loadConfiguration(this.getClass().getResourceAsStream("/config.yml")));
+            getConfig().options().copyDefaults(true);
+        }
         saveConfig();
         
         getUsers().setDefaults(YamlConfiguration.loadConfiguration(this.getClass().getResourceAsStream("/users.yml")));

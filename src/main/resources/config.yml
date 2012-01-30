@@ -1,10 +1,10 @@
 # economy.currency: -1 for money, 0-255 for an item ID
 
 plugin:
-  debug: true
+  debug: false
   version: maven-version-number
   cooldowns: false
-  economy: true
+  economy: false
 
 languages:
   available:
