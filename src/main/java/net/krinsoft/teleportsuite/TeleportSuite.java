@@ -112,7 +112,7 @@ public class TeleportSuite extends JavaPlugin {
         if (!new File(getDataFolder(), "config.yml").exists()) {
             getConfig().options().copyDefaults(true);
         }
-        if (getConfig().getString("plugin.version").equalsIgnoreCase("1.2-b62")) {
+        if (getConfig().getString("plugin.version") != null) {
             getConfig().set("plugin", null);
             getConfig().set("teleport", null);
             getConfig().set("request", null);

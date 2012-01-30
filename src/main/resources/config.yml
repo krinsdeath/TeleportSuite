@@ -2,7 +2,6 @@
 
 plugin:
   debug: false
-  version: maven-version-number
   cooldowns: false
   economy: false
 
