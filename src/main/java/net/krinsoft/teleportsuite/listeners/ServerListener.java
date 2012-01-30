@@ -13,6 +13,7 @@ import java.util.Arrays;
 /**
  * @author krinsdeath
  */
+@SuppressWarnings("unused")
 public class ServerListener implements Listener {
     private TeleportSuite plugin;
 

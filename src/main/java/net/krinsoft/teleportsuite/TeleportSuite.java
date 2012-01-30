@@ -7,10 +7,13 @@ import net.krinsoft.teleportsuite.commands.*;
 import net.krinsoft.teleportsuite.listeners.EntityListener;
 import net.krinsoft.teleportsuite.listeners.PlayerListener;
 import net.krinsoft.teleportsuite.listeners.ServerListener;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -133,6 +136,23 @@ public class TeleportSuite extends JavaPlugin {
         
         debug = getConfig().getBoolean("plugin.debug");
         economy = getConfig().getBoolean("plugin.economy");
+        
+        Permission worlds = new Permission("teleport.world.*");
+        worlds.setDescription("Any user with this node can access all worlds");
+        worlds.setDefault(PermissionDefault.TRUE);
+        if (getServer().getPluginManager().getPermission(worlds.getName()) == null) {
+            getServer().getPluginManager().addPermission(worlds);
+        }
+        for (World w : getServer().getWorlds()) {
+            Permission world = new Permission("teleport.world." + w.getName());
+            world.setDescription("Any user with this node can access the world '" + w.getName() + "'");
+            world.setDefault(PermissionDefault.TRUE);
+            worlds.getChildren().put(world.getName(), true);
+            if (getServer().getPluginManager().getPermission(world.getName()) == null) {
+                getServer().getPluginManager().addPermission(world);
+            }
+        }
+        worlds.recalculatePermissibles();
     }
     
     private void buildLocalizations() {

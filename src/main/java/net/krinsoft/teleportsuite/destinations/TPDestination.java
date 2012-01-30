@@ -6,6 +6,7 @@ import org.bukkit.Location;
 /**
  * @author krinsdeath
  */
+@SuppressWarnings("unused")
 public class TPDestination {
     private TeleportSuite plugin;
     private Location location;
