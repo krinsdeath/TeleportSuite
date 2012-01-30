@@ -1,6 +1,6 @@
 name: TeleportSuite
 main: net.krinsoft.teleportsuite.TeleportSuite
-version: ${project.version}
+version: maven-version-number
 author: krinsdeath
 load: startup
 
