@@ -60,6 +60,10 @@ public class TeleportPlayer {
         return ref;
     }
     
+    public boolean hasPermission(String node) {
+        return ref.hasPermission(node);
+    }
+    
     public String getName() {
         return ref.getName();
     }

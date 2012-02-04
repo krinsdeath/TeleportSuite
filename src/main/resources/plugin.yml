@@ -79,6 +79,10 @@ commands:
       Maximum set by config.yml (default 5)
       Usable from Console
     usage: /<command> [target] [val]
+  tplocation:
+    aliases: [location, tploc]
+    description: Shows the sender their current location in the world.
+    usage: /<command>
   # legacy vanilla /tp
   tpvanilla:
     aliases: [vanilla, tpv]

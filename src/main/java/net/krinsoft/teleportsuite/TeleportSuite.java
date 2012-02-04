@@ -215,6 +215,7 @@ public class TeleportSuite extends JavaPlugin {
         commands.registerCommand(new TPRewindCommand(this));
         commands.registerCommand(new TPVanillaCommand(this));
         commands.registerCommand(new TPDebugCommand(this));
+        commands.registerCommand(new TPLocationCommand(this));
         //commands.registerCommand(new TPGroupCommand(this));
     }
 

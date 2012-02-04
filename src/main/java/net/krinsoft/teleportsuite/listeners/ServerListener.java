@@ -7,6 +7,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 import java.util.Arrays;
 
@@ -30,10 +33,24 @@ public class ServerListener implements Listener {
     }
     
     @EventHandler(priority = EventPriority.MONITOR)
-    void onPluginDisable(PluginDisableEvent event) {
+    void pluginDisable(PluginDisableEvent event) {
         if (Arrays.asList(AllPay.validEconPlugins).contains(event.getPlugin().getDescription().getName())) {
             plugin.log("Detected " + event.getPlugin().getDescription().getName() + " disabling... unhooking.");
             plugin.validateAllPay(false);
         }
     }
+    
+    @EventHandler(priority = EventPriority.MONITOR)
+    void worldLoad(WorldLoadEvent event) {
+        plugin.debug("Registering 'teleport.world." + event.getWorld().getName() + "'...");
+        Permission worlds = plugin.getServer().getPluginManager().getPermission("teleport.world.*");
+        Permission world = new Permission("teleport.world." + event.getWorld().getName());
+        world.setDefault(PermissionDefault.TRUE);
+        world.setDescription("Allows access to the world '" + event.getWorld().getName() + "'");
+        if (plugin.getServer().getPluginManager().getPermission(world.getName()) == null) {
+            plugin.getServer().getPluginManager().addPermission(world);
+            worlds.getChildren().put(world.getName(), true);
+        }
+        worlds.recalculatePermissibles();
+    } 
 }

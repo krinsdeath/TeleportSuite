@@ -4,11 +4,11 @@
     <groupId>net.krinsoft</groupId>
     <artifactId>TeleportSuite</artifactId>
     <packaging>jar</packaging>
-    <version>2.0</version>
+    <version>2.0.1</version>
     <name>TeleportSuite</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.number>UNKNOWN</project.build.number>
+        <project.build.number>DEV</project.build.number>
     </properties>
     <repositories>
         <!-- Multiverse Repository -->
@@ -56,22 +56,32 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.5</version>
                 <executions>
                     <execution>
-                        <id>add-wsdl-source</id>
-                        <phase>generate-sources</phase>
+                        <phase>package</phase>
                         <goals>
-                            <goal>add-source</goal>
+                            <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <sources>
-                                <source>${basedir}/lib/allpay/src/main/java/</source>
-                                <source>${basedir}/lib/commandhandler/src/</source>
-                                <source>${basedir}/lib/commandhandler/lib/ShellParser/src/</source>
-                            </sources>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.fernferret.allpay:AllPay</include>
+                                    <include>com.pneumaticraft.commandhandler:CommandHandler</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.fernferret.allpay</pattern>
+                                    <shadedPattern>com.fernferret.allpay.teleportsuite</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.pneumaticraft.commandhandler</pattern>
+                                    <shadedPattern>com.pneumaticraft.commandhandler.teleportsuite</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -109,77 +119,19 @@
             <type>jar</type>
         </dependency>
         <!-- End Bukkit -->
-        <!-- Start of Economy Dependencies -->
+        <!-- AllPay -->
         <dependency>
-            <groupId>cosine.boseconomy</groupId>
-            <artifactId>BOSEconomy</artifactId>
-            <version>0.6.2</version>
+            <groupId>com.fernferret.allpay</groupId>
+            <artifactId>AllPay</artifactId>
+            <version>6</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
-
+        <!-- CommandHandler -->
         <dependency>
-            <groupId>fr.crafter.tickleman.RealShop</groupId>
-            <artifactId>RealShop</artifactId>
-            <version>0.63</version>
+            <groupId>com.pneumaticraft.commandhandler</groupId>
+            <artifactId>CommandHandler</artifactId>
+            <version>6</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.iCo6</groupId>
-            <artifactId>iConomy</artifactId>
-            <version>6.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.iConomy</groupId>
-            <artifactId>iConomy</artifactId>
-            <version>5.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.nijiko.coelho.iConomy</groupId>
-            <artifactId>iConomy</artifactId>
-            <version>4.65</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.earth2me.essentials</groupId>
-            <artifactId>Essentials</artifactId>
-            <version>2.4.2</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>me.ashtheking.currency</groupId>
-            <artifactId>MultiCurrency</artifactId>
-            <version>0.09</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ca.agnate</groupId>
-            <artifactId>EconXP</artifactId>
-            <version>1.0.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <!-- End of Economy Dependencies -->
-        <!-- JUnit for ShellParser -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-        </dependency>
-        <!-- End JUnit -->
     </dependencies>
 </project>

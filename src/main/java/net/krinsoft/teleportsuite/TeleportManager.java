@@ -48,8 +48,9 @@ public class TeleportManager {
     }
 
     public void queue(TeleportPlayer from, TeleportPlayer to, Request.Type type) {
-        if (!from.getReference().hasPermission("teleport.world." + to.getLocation().getWorld().getName())) {
-            from.sendLocalizedString("error.permission", "teleport.world." + to.getLocation().getWorld().getName());
+        String node = "teleport.world." + to.getLocation().getWorld().getName();
+        if (!from.hasPermission(node)) {
+            from.sendLocalizedString("error.permission", node);
             return;
         }
         if (from.equals(to)) { return; }
@@ -142,6 +143,11 @@ public class TeleportManager {
     public boolean tpworld(TeleportPlayer player, String world, boolean spawn) {
         if (plugin.getServer().getWorld(world) == null) {
             player.sendLocalizedString("error.invalid.world", world);
+            return false;
+        }
+        String node = "teleport.world." + world;
+        if (!player.hasPermission(node)) {
+            player.sendLocalizedString("error.permission", node);
             return false;
         }
         setWorldLastKnown(player.getName(), player.getLocation());
