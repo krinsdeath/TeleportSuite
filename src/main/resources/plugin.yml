@@ -83,6 +83,10 @@ commands:
     aliases: [location, tploc]
     description: Teleports the sender to a specific location
     usage: /<command> x y z [world]
+  tpcoords:
+    aliases: [coords, tpco]
+    description: Shows the sender their current location
+    usage: /<command>
   # legacy vanilla /tp
   tpvanilla:
     aliases: [vanilla, tpv]
@@ -91,6 +95,7 @@ commands:
       Usable from Console
     usage: /<command> [player from] [player to]
   # warp commands
+  # coming soon!
 permissions:
   teleport.users:
     children:
@@ -109,6 +114,7 @@ permissions:
       teleport.user: true
       teleport.tp: true
       teleport.tphere: true
+      teleport.tp.other: true
       teleport.vanilla: true
       teleport.location: true
   teleport.admins:
