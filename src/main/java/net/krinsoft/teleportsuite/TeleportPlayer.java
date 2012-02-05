@@ -61,7 +61,11 @@ public class TeleportPlayer {
     }
     
     public boolean hasPermission(String node) {
-        return ref.hasPermission(node);
+        boolean t = ref.hasPermission(node);
+        if (!t) {
+            sendLocalizedString("error.permission", node);
+        }
+        return t;
     }
     
     public String getName() {

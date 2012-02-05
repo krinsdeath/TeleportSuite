@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: com.fernferret.allpay:AllPay:8">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fernferret/allpay/AllPay/8/AllPay-8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fernferret/allpay/AllPay/8/AllPay-8-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fernferret/allpay/AllPay/8/AllPay-8-sources.jar!/" />
+      <root url="file://$PROJECT_DIR$/../AllPay/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

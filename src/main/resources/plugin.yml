@@ -81,8 +81,8 @@ commands:
     usage: /<command> [target] [val]
   tplocation:
     aliases: [location, tploc]
-    description: Shows the sender their current location in the world.
-    usage: /<command>
+    description: Teleports the sender to a specific location
+    usage: /<command> x y z [world]
   # legacy vanilla /tp
   tpvanilla:
     aliases: [vanilla, tpv]
@@ -100,6 +100,7 @@ permissions:
       teleport.reject: true
       teleport.cancel: true
       teleport.requests: true
+      teleport.coords: true
       teleport.back: true
       teleport.world: true
       teleport.world.*: true
@@ -109,6 +110,7 @@ permissions:
       teleport.tp: true
       teleport.tphere: true
       teleport.vanilla: true
+      teleport.location: true
   teleport.admins:
     children:
       teleport.mod: true

@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,8 +13,7 @@ import java.util.Map;
 public class TeleportManager {
     private TeleportSuite plugin;
     private Map<String, TeleportPlayer> players = new HashMap<String, TeleportPlayer>();
-    private Map<String, List<Request>> queue = new HashMap<String, List<Request>>();
-    
+
     public TeleportManager(TeleportSuite plugin) {
         players.clear();
         this.plugin = plugin;
@@ -50,7 +48,6 @@ public class TeleportManager {
     public void queue(TeleportPlayer from, TeleportPlayer to, Request.Type type) {
         String node = "teleport.world." + to.getLocation().getWorld().getName();
         if (!from.hasPermission(node)) {
-            from.sendLocalizedString("error.permission", node);
             return;
         }
         if (from.equals(to)) { return; }
@@ -147,7 +144,6 @@ public class TeleportManager {
         }
         String node = "teleport.world." + world;
         if (!player.hasPermission(node)) {
-            player.sendLocalizedString("error.permission", node);
             return false;
         }
         setWorldLastKnown(player.getName(), player.getLocation());
@@ -181,41 +177,31 @@ public class TeleportManager {
         if (plugin.getUsers().get(player + "." + world) == null) {
             return location;
         }
-        String[] split = plugin.getUsers().getString(player + "." + world).split(":");
+        String last = plugin.getUsers().getString(player + "." + world);
         double[] xyz = new double[3];
-        float[] face = new float[2];
         try {
-            String[] loc = split[0].split(",");
+            String[] loc = last.split(":");
             xyz[0] = Double.parseDouble(loc[0]);
-            xyz[1] = Double.parseDouble(loc[1]);
+            xyz[1] = Double.parseDouble(loc[1])+0.15;
             xyz[2] = Double.parseDouble(loc[2]);
-            String[] dir = split[1].split(",");
-            face[0] = Float.parseFloat(dir[0]);
-            face[1] = Float.parseFloat(dir[1]);
-            location = new Location(plugin.getServer().getWorld(world), xyz[0], xyz[1], xyz[2], face[0], face[1]);
+            location = new Location(plugin.getServer().getWorld(world), xyz[0], xyz[1], xyz[2]);
             if (location.getWorld().getBlockAt((int)location.getX(), (int)location.getY() + 1, (int)location.getZ()).getType() != Material.AIR) {
                 location = location.getWorld().getHighestBlockAt((int)location.getX(), (int)location.getZ()).getLocation();
                 location.setY(location.getY()+1);
             }
         } catch (NumberFormatException e) {
             plugin.debug("An error occurred while parsing a location in 'users.yml'");
-            e.printStackTrace();
         } catch (IndexOutOfBoundsException e) {
             plugin.debug("An error occurred while parsing a location in 'users.yml'");
-            e.printStackTrace();
         }
         return location;
     }
     
     public String createLocationString(Location l) {
         double[] xyz = new double[3];
-        float[] dir = new float[2];
         xyz[0] = l.getX();
         xyz[1] = l.getY();
         xyz[2] = l.getZ();
-        dir[0] = l.getYaw();
-        dir[1] = l.getPitch();
-        return xyz[0] + "," + xyz[1] + "," + xyz[2] + ":" +
-                dir[0] + "," + dir[1];
+        return xyz[0] + ":" + xyz[1] + ":" + xyz[2];
     }
 }

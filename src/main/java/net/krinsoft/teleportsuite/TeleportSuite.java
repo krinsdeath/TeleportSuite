@@ -27,6 +27,7 @@ import java.util.logging.Logger;
  *
  * @author krinsdeath
  */
+@SuppressWarnings("unused")
 public class TeleportSuite extends JavaPlugin {
     private final static Logger LOGGER = Logger.getLogger("TeleportSuite");
     private boolean debug = true;
@@ -51,10 +52,6 @@ public class TeleportSuite extends JavaPlugin {
         
         manager = new TeleportManager(this);
         
-        if (!validateCommandHandler()) {
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
         registerConfiguration();
         registerEvents();
         registerCommands();
@@ -216,39 +213,17 @@ public class TeleportSuite extends JavaPlugin {
         commands.registerCommand(new TPVanillaCommand(this));
         commands.registerCommand(new TPDebugCommand(this));
         commands.registerCommand(new TPLocationCommand(this));
+        commands.registerCommand(new TPCoordsCommand(this));
         //commands.registerCommand(new TPGroupCommand(this));
-    }
-
-    private boolean validateCommandHandler() {
-        double CHVersion = 3.0;
-        CommandHandler ch = new CommandHandler(this, null);
-        try {
-            if (ch.getVersion() >= CHVersion) {
-                return true;
-            } else {
-                warn("Another plugin initialized before TeleportSuite with an outdated version!");
-                warn("TeleportSuite needs at least v" + CHVersion + ", but " + ch.getVersion() + " was found!");
-                return false;
-            }
-        } catch (Throwable t) {
-            warn("Another plugin initialized before TeleportSuite with an outdated version!");
-            warn("TeleportSuite needs at least v" + CHVersion + ", but " + ch.getVersion() + " was found!");
-            return false;
-        }
     }
     
     public boolean validateAllPay() {
         if (economy) {
             if (bank != null) { return true; }
-            double APVersion = 3.1;
             AllPay allpay = new AllPay(this, "[" + this + "] ");
-            if (allpay.getVersion() >= APVersion) {
-                bank = allpay.loadEconPlugin();
-                log(bank.getEconUsed() + " hooked successfully!");
-                return true;
-            } else {
-                return false;
-            }
+            bank = allpay.loadEconPlugin();
+            log(bank.getEconUsed() + " hooked successfully!");
+            return true;
         }
         return false;
     }

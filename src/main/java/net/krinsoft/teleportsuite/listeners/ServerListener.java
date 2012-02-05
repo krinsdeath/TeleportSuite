@@ -11,7 +11,9 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author krinsdeath
@@ -26,7 +28,7 @@ public class ServerListener implements Listener {
     
     @EventHandler(priority = EventPriority.MONITOR)
     void pluginEnable(PluginEnableEvent event) {
-        if (Arrays.asList(AllPay.validEconPlugins).contains(event.getPlugin().getDescription().getName())) {
+        if (Arrays.asList(AllPay.getValidEconPlugins()).contains(event.getPlugin().getDescription().getName())) {
             plugin.log("Detected " + event.getPlugin().getDescription().getName() + " v" + event.getPlugin().getDescription().getVersion() + "; attempting to hook...");
             plugin.validateAllPay();
         }
@@ -34,7 +36,7 @@ public class ServerListener implements Listener {
     
     @EventHandler(priority = EventPriority.MONITOR)
     void pluginDisable(PluginDisableEvent event) {
-        if (Arrays.asList(AllPay.validEconPlugins).contains(event.getPlugin().getDescription().getName())) {
+        if (Arrays.asList(AllPay.getValidEconPlugins()).contains(event.getPlugin().getDescription().getName())) {
             plugin.log("Detected " + event.getPlugin().getDescription().getName() + " disabling... unhooking.");
             plugin.validateAllPay(false);
         }
