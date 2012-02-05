@@ -96,6 +96,7 @@ commands:
     usage: /<command> [player from] [player to]
   # warp commands
   # coming soon!
+
 permissions:
   teleport.users:
     children:
@@ -104,6 +105,7 @@ permissions:
       teleport.accept: true
       teleport.reject: true
       teleport.cancel: true
+      teleport.toggle: true
       teleport.requests: true
       teleport.coords: true
       teleport.back: true

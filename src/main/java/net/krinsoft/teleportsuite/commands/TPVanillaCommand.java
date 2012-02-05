@@ -30,7 +30,12 @@ public class TPVanillaCommand extends TeleportCommand {
         Player from = plugin.getServer().getPlayer(args.get(0));
         Player to = plugin.getServer().getPlayer(args.get(1));
         if (from == null || to == null) {
-            sender.sendMessage(plugin.getLocalization(null).get("error.invalid.arguments", null));
+            if (from == null) {
+                sender.sendMessage(plugin.getLocalization(null).get("error.invalid.player", args.get(0)));
+            }
+            if (to == null) {
+                sender.sendMessage(plugin.getLocalization(null).get("error.invalid.player", args.get(1)));
+            }
             return;
         }
         from.teleport(to);
