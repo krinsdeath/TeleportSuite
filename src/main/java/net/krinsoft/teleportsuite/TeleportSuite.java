@@ -49,10 +49,11 @@ public class TeleportSuite extends JavaPlugin {
     @Override
     public void onEnable() {
         long startup = System.currentTimeMillis();
-        
+
+        registerConfiguration();
+
         manager = new TeleportManager(this);
         
-        registerConfiguration();
         registerEvents();
         registerCommands();
         log("Enabled in " + (System.currentTimeMillis() - startup) + "ms");

@@ -21,6 +21,13 @@ public class TeleportManager {
             register(p.getName());
         }
     }
+    
+    public void disable() {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            unregister(p.getName());
+        }
+        players.clear();
+    }
 
     public TeleportPlayer register(String player) {
         if (!players.containsKey(player)) {
