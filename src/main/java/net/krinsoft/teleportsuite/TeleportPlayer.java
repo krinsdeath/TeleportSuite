@@ -68,7 +68,7 @@ public class TeleportPlayer {
         }
         return t;
     }
-    
+
     public String getName() {
         return ref.getName();
     }

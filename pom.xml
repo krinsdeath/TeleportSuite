@@ -14,7 +14,7 @@
         <!-- Multiverse Repository -->
         <repository>
             <id>onarandombox</id>
-            <url>http://repo.onarandombox.com/content/groups/public/</url>
+            <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
         <!-- End Multiverse -->
     </repositories>

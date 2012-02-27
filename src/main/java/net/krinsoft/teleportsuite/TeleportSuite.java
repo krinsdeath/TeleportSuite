@@ -272,7 +272,7 @@ public class TeleportSuite extends JavaPlugin {
 
     public void saveUsers() {
         try {
-            users.save(userFile);
+            getUsers().save(userFile);
         } catch (IOException e) {
             debug("An error occurred while saving 'users.yml'");
             e.printStackTrace();
