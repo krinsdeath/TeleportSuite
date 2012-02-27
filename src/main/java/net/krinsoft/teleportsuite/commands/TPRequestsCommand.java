@@ -3,6 +3,7 @@ package net.krinsoft.teleportsuite.commands;
 import net.krinsoft.teleportsuite.Request;
 import net.krinsoft.teleportsuite.TeleportPlayer;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -17,13 +18,16 @@ public class TPRequestsCommand extends TeleportCommand {
     public TPRequestsCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: Requests");
-        setCommandUsage("/tprequests");
+        setCommandUsage(  ChatColor.GREEN + "/requests" + ChatColor.GOLD + " [PLAYER]");
+        addCommandExample(ChatColor.GREEN + "/requests" + ChatColor.GOLD + "         " + ChatColor.WHITE + " -- Show all pending requests.");
+        addCommandExample(ChatColor.GREEN + "/requests" + ChatColor.GOLD + " Njodi   " + ChatColor.WHITE + " -- Show Njodi's requests.");
         setArgRange(0, 1);
         addKey("teleport requests");
         addKey("tps requests");
         addKey("tprequests");
         addKey("requests");
         addKey("tpreq");
+        addKey("req");
         setPermission("teleport.requests", "Allows this user to view their open requests.", PermissionDefault.TRUE);
     }
     

@@ -44,6 +44,7 @@ public class TeleportPlayer {
     public TeleportPlayer(TeleportSuite plugin, String name) {
         this.plugin = plugin;
         this.ref = plugin.getServer().getPlayer(name);
+        this.silent = plugin.getUsers().getBoolean(name + ".silent");
         this.language = plugin.getUsers().getString(name + ".language");
         if (this.language == null) {
             this.language = plugin.getConfig().getString("languages.default");
@@ -71,6 +72,17 @@ public class TeleportPlayer {
     public String getName() {
         return ref.getName();
     }
+
+    public void setLanguage(String lang) {
+        language = lang;
+        sendLocalizedString("default.change", null);
+    }
+
+    public void save() {
+        plugin.getUsers().set(getName() + ".silent"       , silent);
+        plugin.getUsers().set(getName() + ".language"     , language);
+        plugin.getUsers().set(getName() + ".status"       , status.getName());
+    }
     
     public TPDestination pushToStack(Location loc) {
         TPDestination dest = new TPDestination(plugin, loc);
@@ -86,10 +98,13 @@ public class TeleportPlayer {
      * @return the player's new location 
      */
     public TPDestination rewind() {
-        sendLocalizedString("teleport.tpback", getName());
         if (stack.isEmpty()) { return null; }
-        ref.teleport(stack.get(0).getLocation());
-        return stack.remove(0);
+        TPDestination tp = stack.remove(0);
+        if (stack.isEmpty()) { return tp; }
+        tp = stack.remove(0);
+        ref.teleport(tp.getLocation());
+        sendLocalizedString("teleport.tpback", getName());
+        return tp;
     }
 
     /**
@@ -124,6 +139,7 @@ public class TeleportPlayer {
     
     public void sendMessage(String message) {
         if (message == null) { return; }
+        message = message.replaceAll("&([0-9A-Fa-f])", "\u00A7$1");
         ref.sendMessage(message);
     }
     

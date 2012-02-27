@@ -18,9 +18,10 @@ public class EntityListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     void entityDeath(EntityDeathEvent event) {
         if (event.getEntity() instanceof Player) {
+            plugin.debug(((Player)event.getEntity()).getName() + " died!");
             plugin.getManager().getPlayer(((Player)event.getEntity()).getName()).pushToStack(event.getEntity().getLocation());
         }
     }

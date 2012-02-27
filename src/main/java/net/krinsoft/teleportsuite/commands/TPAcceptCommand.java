@@ -3,6 +3,7 @@ package net.krinsoft.teleportsuite.commands;
 import net.krinsoft.teleportsuite.Request;
 import net.krinsoft.teleportsuite.TeleportPlayer;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -17,17 +18,18 @@ public class TPAcceptCommand extends TeleportCommand {
     public TPAcceptCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: Accept");
-        setCommandUsage("/tpaccept [PLAYER] [-all]");
-        addCommandExample("/tpaccept Player -- Accepts a request from 'Player'");
-        addCommandExample("/tpaccept -all -- Accepts all pending requests.");
-        addCommandExample("/tpaccept -- Accepts your first open request.");
+        setCommandUsage(  ChatColor.GREEN + "/accept" + ChatColor.GOLD + " [OPTION]");
+        addCommandExample(ChatColor.GREEN + "/accept" + ChatColor.GOLD + " Njodi   " + ChatColor.WHITE + " -- Accepts a request from 'Njodi'");
+        addCommandExample(ChatColor.GREEN + "/accept" + ChatColor.GOLD + " -all    " + ChatColor.WHITE + " -- Accepts all pending requests.");
+        addCommandExample(ChatColor.GREEN + "/accept" + ChatColor.GOLD + "         " + ChatColor.WHITE + " -- Accepts your first open request.");
         setArgRange(0, 1);
         addKey("teleport accept");
         addKey("tps accept");
         addKey("tpaccept");
         addKey("accept");
         addKey("tpacc");
-        setPermission("teleport.accept", "Allows this user to access the /tpaccept command", PermissionDefault.TRUE);
+        addKey("acc");
+        setPermission("teleport.accept", "Allows the user to accept requests with /accept", PermissionDefault.TRUE);
     }
 
     @Override

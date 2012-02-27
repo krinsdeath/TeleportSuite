@@ -27,6 +27,7 @@ public class TeleportManager {
             unregister(p.getName());
         }
         players.clear();
+        plugin.saveUsers();
     }
 
     public TeleportPlayer register(String player) {
@@ -34,12 +35,13 @@ public class TeleportManager {
             players.put(player, new TeleportPlayer(plugin, player));
             plugin.debug(player + " was registered.");
         }
-        return players.get(player); 
+        return players.get(player);
     }
     
     public TeleportPlayer unregister(String player) {
         TeleportPlayer p = players.remove(player);
         if (p != null) {
+            p.save();
             plugin.debug(p.getName() + " was unregistered.");
         } else {
             plugin.debug(player + " was not registered; couldn't unregister...");
@@ -93,12 +95,18 @@ public class TeleportManager {
                 // to -> from
                 case TPHERE: executeTP(to, from); break;
                 case TPOHERE: executeTPO(to, from); break;
+                // default?
+                default: return;
             }
             deductFunds(from, type.getName());
         }
     }
 
     public void finish(TeleportPlayer from, Request request, boolean val) {
+        if (request == null) {
+            from.sendLocalizedString("error.invalid.player", null);
+            return;
+        }
         if (val) {
             from.sendLocalizedString("teleport.tpaccept", request.getTo().getName());
             switch (request.getType()) {

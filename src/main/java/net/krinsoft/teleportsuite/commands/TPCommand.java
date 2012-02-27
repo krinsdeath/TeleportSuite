@@ -2,6 +2,7 @@ package net.krinsoft.teleportsuite.commands;
 
 import net.krinsoft.teleportsuite.Request;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -16,13 +17,14 @@ public class TPCommand extends TeleportCommand {
     public TPCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: TP");
-        setCommandUsage("/tp [PLAYER]");
-        addCommandExample("/tp krinsdeath - Teleport directly to krinsdeath.");
+        setCommandUsage(  ChatColor.GREEN + "/tp" + ChatColor.GOLD + " [PLAYER]" + ChatColor.YELLOW + " [PLAYER] ");
+        addCommandExample(ChatColor.GREEN + "/tp" + ChatColor.GOLD + " Njodi   " + ChatColor.YELLOW + "          " + ChatColor.WHITE + " -- Teleport directly to Njodi.");
+        addCommandExample(ChatColor.GREEN + "/tp" + ChatColor.GOLD + " Njodi   " + ChatColor.YELLOW + " Player2  " + ChatColor.WHITE + " -- Teleport Njodi to Player2");
         setArgRange(1, 2);
         addKey("teleport tp");
         addKey("tps tp");
         addKey("tp");
-        setPermission("teleport.tp", "Teleports directly to another player.", PermissionDefault.OP);
+        setPermission("teleport.tp", "Allows users to teleport. (/tp)", PermissionDefault.OP);
     }
 
     public void runCommand(CommandSender sender, List<String> args) {

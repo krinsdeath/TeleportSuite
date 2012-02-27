@@ -45,11 +45,11 @@ public class TPDestination {
             String world = locs[0];
             location = new Location(plugin.getServer().getWorld(world), Double.parseDouble(locs[1]), Double.parseDouble(locs[2]), Double.parseDouble(locs[3]));
         } catch (ArrayIndexOutOfBoundsException e) {
-            plugin.debug("An error occurred while parsing a location string.");
+            plugin.warn("An error occurred while parsing a location string.");
         } catch (NumberFormatException e) {
-            plugin.debug("An error occurred while parsing a location string.");
+            plugin.warn("An error occurred while parsing a location string.");
         } catch (NullPointerException e) {
-            plugin.debug("An error occurred while parsing a location string.");
+            plugin.warn("An error occurred while parsing a location string.");
         }
     }
 

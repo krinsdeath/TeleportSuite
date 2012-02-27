@@ -2,6 +2,7 @@ package net.krinsoft.teleportsuite.commands;
 
 import net.krinsoft.teleportsuite.TeleportPlayer;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -16,7 +17,8 @@ public class TPSilentCommand extends TeleportCommand {
     public TPSilentCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: Silent");
-        setCommandUsage("/tpsilent");
+        setCommandUsage(  ChatColor.GREEN + "/silent");
+        addCommandExample(ChatColor.GREEN + "/silent" + ChatColor.WHITE + " -- Toggles your stealth setting.");
         setArgRange(0, 0);
         addKey("teleport silent");
         addKey("tps silent");

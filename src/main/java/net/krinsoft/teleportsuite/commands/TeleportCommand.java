@@ -2,11 +2,10 @@ package net.krinsoft.teleportsuite.commands;
 
 import com.pneumaticraft.commandhandler.Command;
 import net.krinsoft.teleportsuite.*;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 /**
  * @author krinsdeath
@@ -14,8 +13,7 @@ import java.util.List;
 public abstract class TeleportCommand extends Command {
     protected TeleportSuite plugin;
     protected TeleportManager manager;
-    protected Localization locs;
-    
+
     protected int curr;
     private boolean economy = false;
     
@@ -51,6 +49,7 @@ public abstract class TeleportCommand extends Command {
             plugin.debug("'" + player.getName() + "' has enough currency.");
             return true;
         } else {
+            sender.sendMessage(ChatColor.RED + "Your pockets aren't deep enough for that.");
             plugin.debug("'" + player.getName() + "' doesn't have enough currency.");
             return false;
         }
@@ -65,4 +64,53 @@ public abstract class TeleportCommand extends Command {
         manager.queue(from, to, type);
     }
 
+    @Override
+    public void showHelp(CommandSender sender) {
+        showHeader(sender);
+        showUsage(sender);
+        showDescription(sender);
+        showPermission(sender);
+        showAliases(sender);
+        showExamples(sender);
+    }
+
+    public void showHeader(CommandSender sender) {
+        sender.sendMessage(ChatColor.GREEN + "=== " + ChatColor.AQUA + getCommandName() + ChatColor.GREEN + " ===");
+    }
+
+    public void showUsage(CommandSender sender) {
+        sender.sendMessage(ChatColor.GREEN + "Usage:       " + ChatColor.AQUA + getCommandUsage());
+    }
+
+    public void showDescription(CommandSender sender) {
+        sender.sendMessage(ChatColor.GREEN + "Description: " + ChatColor.GOLD + getCommandDesc());
+    }
+
+    public void showPermission(CommandSender sender) {
+        sender.sendMessage(ChatColor.GREEN + "Permission:  " + ChatColor.GOLD + this.getPermissionString());
+    }
+
+    public void showAliases(CommandSender sender) {
+        String keys = "";
+        for (String key : this.getKeyStrings()) {
+            keys += key + ", ";
+        }
+        keys = keys.substring(0, keys.length() - 2);
+        sender.sendMessage(ChatColor.GREEN + "Aliases: " + ChatColor.RED + keys);
+    }
+
+    public void showExamples(CommandSender sender) {
+        if (this.getCommandExamples().size() > 0) {
+            sender.sendMessage(ChatColor.GREEN + "Examples: ");
+            if (sender instanceof Player) {
+                for (int i = 0; i < 4 && i < this.getCommandExamples().size(); i++) {
+                    sender.sendMessage(this.getCommandExamples().get(i));
+                }
+            } else {
+                for (String c : this.getCommandExamples()) {
+                    sender.sendMessage(c);
+                }
+            }
+        }
+    }
 }

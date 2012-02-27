@@ -2,6 +2,7 @@ package net.krinsoft.teleportsuite.commands;
 
 import net.krinsoft.teleportsuite.TeleportPlayer;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -15,10 +16,10 @@ public class TPWorldCommand extends TeleportCommand {
     public TPWorldCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: TP World");
-        setCommandUsage("/tpworld [WORLD] [-s]");
-        addCommandExample("/tpworld world -- Teleports you to your last location in 'world'");
-        addCommandExample("/tpworld world -s -- Teleports you to the 'world' spawn point.");
-        addCommandExample("/tpworld -s -- Teleport to your current world's spawn point.");
+        setCommandUsage(  ChatColor.GREEN + "/world" + ChatColor.GOLD + " [WORLD]" + ChatColor.YELLOW + " [-s]");
+        addCommandExample(ChatColor.GREEN + "/world" + ChatColor.GOLD + " world  " + ChatColor.YELLOW + "     " + ChatColor.WHITE + " -- Teleports you to your last location in 'world'");
+        addCommandExample(ChatColor.GREEN + "/world" + ChatColor.GOLD + " world  " + ChatColor.YELLOW + " -s  " + ChatColor.WHITE + " -- Teleports you to the 'world' spawn point.");
+        addCommandExample(ChatColor.GREEN + "/world" + ChatColor.GOLD + " -s     " + ChatColor.YELLOW + "     " + ChatColor.WHITE + " -- Teleport to your current world's spawn point.");
         setArgRange(1, 2);
         addKey("teleport world");
         addKey("tps world");

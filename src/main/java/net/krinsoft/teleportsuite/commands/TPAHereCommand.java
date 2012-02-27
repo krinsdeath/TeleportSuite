@@ -2,6 +2,7 @@ package net.krinsoft.teleportsuite.commands;
 
 import net.krinsoft.teleportsuite.Request;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -15,13 +16,13 @@ public class TPAHereCommand extends TeleportCommand {
     public TPAHereCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: TPA Here");
-        setCommandUsage("/tpahere [PLAYER]");
-        addCommandExample("/tpahere krinsdeath - Ask krinsdeath to teleport to you.");
+        setCommandUsage(  ChatColor.GREEN + "/tpahere" + ChatColor.GOLD + " [PLAYER]");
+        addCommandExample(ChatColor.GREEN + "/tpahere" + ChatColor.GOLD + " Njodi   " + ChatColor.WHITE + " -- Ask Njodi to teleport to you.");
         setArgRange(1, 1);
         addKey("teleport tpahere");
         addKey("tps tpahere");
         addKey("tpahere");
-        setPermission("teleport.tpahere", "Allows users to request a user to teleport to them.", PermissionDefault.TRUE);
+        setPermission("teleport.tpahere", "Allows users to request a teleport with /tpahere.", PermissionDefault.TRUE);
     }
 
     public void runCommand(CommandSender sender, List<String> args) {

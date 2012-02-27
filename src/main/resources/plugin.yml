@@ -5,9 +5,11 @@ author: krinsdeath
 load: startup
 
 commands:
-  # teleport commands
-  tps:
-    aliases: [teleport]
+  #####################
+  # teleport commands #
+  #####################
+  teleport:
+    aliases: [tps]
     description: The basic command and root for all TeleportSuite commands.
     usage: /<command> [options]...
   tpa:
@@ -32,42 +34,6 @@ commands:
     aliases: [world, tpw]
     description: Teleports to your last known location in the specified world.
     usage: /<command> [world] [-s]
-  tpaccept:
-    aliases: [accept, tpacc]
-    description: |
-      Accepts an active teleport request from the specified player,
-      or all active requests.
-    usage: /<command> [request] [-all]
-  tpreject:
-    aliases: [reject, tprej]
-    description: |
-      Rejects an active teleport request from the specified player,
-      or all active requests.
-    usage: /<command> [request] [-all]
-  tpcancel:
-    aliases: [cancel, tpcan]
-    description: Cancels your currently active request.
-    usage: /<command>
-  tprequests:
-    aliases: [requests, tpreq]
-    description: |
-      Lists your active requests and any pending requests.
-      Usable from Console
-    usage: /<command> [target]
-  tptoggle:
-    aliases: [toggle, tptog]
-    description: |
-      Toggles your 'request' status.
-      "Accepting" means you will be prompted to accept any requests
-      "Rejecting" means you will ignore all requests
-      "Auto" means you will automatically accept all requests
-    usage: /<command> -[acc|rej|auto]
-  tpsilent:
-    aliases: [silent, tpsil]
-    description: |
-      Toggle. Makes your teleports silent (no broadcast).
-      Applies only to tpo and tpohere.
-    usage: /<command>
   tpback:
     aliases: [back, tpb]
     description: Teleports the sender to their location prior to their last teleport.
@@ -80,12 +46,60 @@ commands:
       Usable from Console
     usage: /<command> [target] [val]
   tplocation:
-    aliases: [location, tploc]
+    aliases: [location, tploc, loc]
     description: Teleports the sender to a specific location
     usage: /<command> x y z [world]
+  #################
+  # user commands #
+  #################
+  tpaccept:
+    aliases: [accept, tpacc, acc]
+    description: |
+      Accepts an active teleport request from the specified player,
+      or all active requests.
+    usage: /<command> [request] [-all]
+  tpreject:
+    aliases: [reject, tprej, rej]
+    description: |
+      Rejects an active teleport request from the specified player,
+      or all active requests.
+    usage: /<command> [request] [-all]
+  tpcancel:
+    aliases: [cancel, tpcan, can]
+    description: Cancels your currently active request.
+    usage: /<command>
+  tprequests:
+    aliases: [requests, tpreq, req]
+    description: |
+      Lists your active requests and any pending requests.
+      Usable from Console
+    usage: /<command> [target]
+  tptoggle:
+    aliases: [toggle, tptog, tog]
+    description: |
+      Toggles your 'request' status.
+      "Accepting" means you will be prompted to accept any requests
+      "Rejecting" means you will ignore all requests
+      "Auto" means you will automatically accept all requests
+    usage: /<command> [OPTION]
+  tpsilent:
+    aliases: [silent, tpsil]
+    description: |
+      Toggle. Makes your teleports silent (no broadcast).
+      Applies only to tpo and tpohere.
+    usage: /<command>
   tpcoords:
     aliases: [coords, tpco]
     description: Shows the sender their current location
+    usage: /<command>
+  ###########################
+  # administrative commands #
+  ###########################
+  tpdebug:
+    description: Toggles debug mode for TeleportSuite.
+    usage: /<command>
+  tpreload:
+    description: Reloads TeleportSuite's configuration files.
     usage: /<command>
   # legacy vanilla /tp
   tpvanilla:

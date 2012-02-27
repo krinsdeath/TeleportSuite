@@ -5,6 +5,8 @@ error:
     player: "&CThe player '[target]' doesn't exist."
     world: "&CThe world '[target]' doesn't exist."
     destination: "&CThat destination is unreachable."
+    request: "&CThe request was &9null&C; please report the error."
+    language: "&CThere is no such language available."
   requests:
     open: "&CYou can only request one teleport at a time."
     rejected: "&C[target] rejected your request."
@@ -28,8 +30,8 @@ teleport:
   tprequest: "&6You sent a request to [target]."
   tprewind: "&6Rewinding &A[target]&6 locations."
   requests:
-    tpa: "&A[target] wants to teleport to you. (&B/tpaccept [target]&A)"
-    tpahere: "&A[target] wants you to teleport to them. (&B/tpaccept [target]&A)"
+    tpa: "&A[target] wants to teleport to you. (&B/accept [target]&A)"
+    tpahere: "&A[target] wants you to teleport to them. (&B/accept [target]&A)"
 
 status:
   silent:
@@ -43,3 +45,8 @@ status:
   requests:
     open: "&9You have the following &Apending&9 requests: "
     active: "&9You have sent a request to &A[target]&9."
+
+default:
+  name: "American English"
+  languages: "Available Languages:"
+  change: "Localization set to American English."

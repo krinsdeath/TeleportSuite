@@ -1,6 +1,7 @@
 package net.krinsoft.teleportsuite.commands;
 
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
@@ -15,7 +16,8 @@ public class TPVanillaCommand extends TeleportCommand {
     public TPVanillaCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: Teleport");
-        setCommandUsage("/tpvanilla [PLAYER FROM] [PLAYER TO]");
+        setCommandUsage(  ChatColor.GREEN + "/tpv" + ChatColor.GOLD + " [PLAYER]" + ChatColor.YELLOW + " [PLAYER]");
+        addCommandExample(ChatColor.GREEN + "/tpv" + ChatColor.GOLD + " Njodi   " + ChatColor.YELLOW + " Player  " + ChatColor.WHITE + " -- Teleports Njodi to Player");
         setArgRange(2, 2);
         addKey("teleport vanilla");
         addKey("tps vanilla");

@@ -1,6 +1,5 @@
 package net.krinsoft.teleportsuite.commands;
 
-import net.krinsoft.teleportsuite.Localization;
 import net.krinsoft.teleportsuite.TeleportPlayer;
 import net.krinsoft.teleportsuite.TeleportSuite;
 import org.bukkit.ChatColor;
@@ -8,10 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 
-import java.io.StringWriter;
 import java.util.List;
 
 /**
@@ -22,16 +19,17 @@ public class TPLocationCommand extends TeleportCommand {
     public TPLocationCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: Location");
-        setCommandUsage("/tploc x y z world");
-        addCommandExample("/tploc 15 75 99 -- Teleport to the specified location in your current world.");
-        addCommandExample("/tploc 131 55 63 world -- Teleport to the location in the world 'world'");
+        setCommandUsage(  ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " x   y   z  " + ChatColor.YELLOW + " [WORLD]");
+        addCommandExample(ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " 15  75  99 ");
+        addCommandExample(ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " 131 55  63 " + ChatColor.YELLOW + " world  ");
         setArgRange(3, 4);
         addKey("teleport location");
         addKey("tps location");
         addKey("tplocation");
         addKey("location");
         addKey("tploc");
-        setPermission("teleport.location", "Allows this user to teleport to a set of [x, y, z] coordinates.", PermissionDefault.TRUE);
+        addKey("loc");
+        setPermission("teleport.location", "Allows this user to teleport to a set of [x, y, z] coordinates. (/loc)", PermissionDefault.TRUE);
     }
     
     @Override

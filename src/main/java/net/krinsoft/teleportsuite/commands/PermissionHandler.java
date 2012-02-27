@@ -1,8 +1,8 @@
 package net.krinsoft.teleportsuite.commands;
 
 import com.pneumaticraft.commandhandler.PermissionsInterface;
-import net.krinsoft.teleportsuite.TeleportSuite;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.List;
 
@@ -11,15 +11,10 @@ import java.util.List;
  * @author krinsdeath
  */
 public class PermissionHandler implements PermissionsInterface {
-    private TeleportSuite plugin;
-    
-    public PermissionHandler(TeleportSuite plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public boolean hasPermission(CommandSender sender, String node, boolean isOpRequired) {
-        return sender.hasPermission(node) || (sender.isOp() && !sender.isPermissionSet(node));
+        return sender instanceof ConsoleCommandSender || sender.hasPermission(node);
     }
 
     @Override

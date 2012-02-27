@@ -3,6 +3,7 @@ package net.krinsoft.teleportsuite.commands;
 import net.krinsoft.teleportsuite.Request;
 import net.krinsoft.teleportsuite.TeleportPlayer;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -17,16 +18,17 @@ public class TPRejectCommand extends TeleportCommand {
     public TPRejectCommand(TeleportSuite plugin) {
         super(plugin);
         setName("TeleportSuite: Reject");
-        setCommandUsage("/tpreject [PLAYER] [-all]");
-        addCommandExample("/tpreject Player -- Rejects a request from 'Player'");
-        addCommandExample("/tpreject -all -- Rejects all pending requests.");
-        addCommandExample("/tpreject -- Rejects your first open request.");
+        setCommandUsage(  ChatColor.GREEN + "/reject" + ChatColor.GOLD + " [OPTION]");
+        addCommandExample(ChatColor.GREEN + "/reject" + ChatColor.GOLD + " Njodi   " + ChatColor.WHITE + " -- Rejects a request from 'Njodi'");
+        addCommandExample(ChatColor.GREEN + "/reject" + ChatColor.GOLD + " -all    " + ChatColor.WHITE + " -- Rejects all pending requests.");
+        addCommandExample(ChatColor.GREEN + "/reject" + ChatColor.GOLD + "         " + ChatColor.WHITE + " -- Rejects your first open request.");
         setArgRange(0, 1);
         addKey("teleport reject");
         addKey("tps reject");
         addKey("tpreject");
         addKey("reject");
         addKey("tprej");
+        addKey("rej");
         setPermission("teleport.reject", "Allows this user to access the /tpreject command", PermissionDefault.TRUE);
     }
 
