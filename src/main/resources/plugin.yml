@@ -127,7 +127,7 @@ permissions:
       teleport.world.*: true
   teleport.mods:
     children:
-      teleport.user: true
+      teleport.users: true
       teleport.tp: true
       teleport.tphere: true
       teleport.tp.other: true
@@ -135,7 +135,7 @@ permissions:
       teleport.location: true
   teleport.admins:
     children:
-      teleport.mod: true
+      teleport.mods: true
       teleport.silent: true
       teleport.rewind: true
       teleport.tpo: true

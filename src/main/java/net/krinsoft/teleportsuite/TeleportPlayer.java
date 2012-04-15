@@ -33,6 +33,7 @@ public class TeleportPlayer {
 
     private TeleportSuite plugin;
     private Player ref;
+    private String name;
     private List<TPDestination> stack = new ArrayList<TPDestination>();
     private List<Request> requests = new ArrayList<Request>();
     private String language;
@@ -44,6 +45,7 @@ public class TeleportPlayer {
     public TeleportPlayer(TeleportSuite plugin, String name) {
         this.plugin = plugin;
         this.ref = plugin.getServer().getPlayer(name);
+        this.name = ref.getName();
         this.silent = plugin.getUsers().getBoolean(name + ".silent");
         this.language = plugin.getUsers().getString(name + ".language");
         if (this.language == null) {
@@ -70,7 +72,7 @@ public class TeleportPlayer {
     }
 
     public String getName() {
-        return ref.getName();
+        return name;
     }
 
     public void setLanguage(String lang) {
@@ -83,7 +85,12 @@ public class TeleportPlayer {
         plugin.getUsers().set(getName() + ".language"     , language);
         plugin.getUsers().set(getName() + ".status"       , status.getName());
     }
-    
+
+    /**
+     * Pushes a location into this player's teleport stack
+     * @param loc The location to add to the front of the stack
+     * @return The TPDestination representing the location we just pushed into the stack
+     */
     public TPDestination pushToStack(Location loc) {
         TPDestination dest = new TPDestination(plugin, loc);
         stack.add(0, dest);
@@ -142,10 +149,17 @@ public class TeleportPlayer {
         message = message.replaceAll("&([0-9A-Fa-f])", "\u00A7$1");
         ref.sendMessage(message);
     }
-    
+
+    /**
+     * Sends a localized string based on the key provided
+     * @param key The value of the key in the localization file to send
+     * @param token Replace variables in the returned string with this value
+     */
     public void sendLocalizedString(String key, String token) {
         String msg = plugin.getLocalization(language).get(key, token);
-        sendMessage(msg);
+        for (String line : msg.split("\n")) {
+            sendMessage(line);
+        }
     }
 
     public boolean isSilent() {
@@ -203,10 +217,10 @@ public class TeleportPlayer {
     public void cancelRequest() {
         if (request != null) {
             TeleportPlayer p = plugin.getManager().getPlayer(request);
-            Request r = p.getRequest(this.getName());
+            Request r = p.getRequest(getName());
             if (r != null) {
                 p.getRequests().remove(r);
-                p.sendLocalizedString("error.requests.canceled", this.getName());
+                p.sendLocalizedString("error.requests.canceled", getName());
             }
             sendLocalizedString("teleport.tpcancel", request);
             request = null;
