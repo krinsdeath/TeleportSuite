@@ -81,9 +81,9 @@ public class TeleportPlayer {
     }
 
     public void save() {
-        plugin.getUsers().set(getName() + ".silent"       , silent);
-        plugin.getUsers().set(getName() + ".language"     , language);
-        plugin.getUsers().set(getName() + ".status"       , status.getName());
+        plugin.getUsers().set(name + ".silent"       , silent);
+        plugin.getUsers().set(name + ".language"     , language);
+        plugin.getUsers().set(name + ".status"       , status.getName());
     }
 
     /**
