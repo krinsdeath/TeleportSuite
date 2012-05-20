@@ -42,6 +42,7 @@ public class TeleportManager {
         TeleportPlayer p = players.remove(player);
         if (p != null) {
             p.save();
+            p.clean();
             plugin.debug(p.getName() + " was unregistered.");
         } else {
             plugin.debug(player + " was not registered; couldn't unregister...");

@@ -15,7 +15,7 @@ public class TPVanillaCommand extends TeleportCommand {
     
     public TPVanillaCommand(TeleportSuite plugin) {
         super(plugin);
-        setName("TeleportSuite: Teleport");
+        setName("TeleportSuite: Teleport Vanilla");
         setCommandUsage(  ChatColor.GREEN + "/tpv" + ChatColor.GOLD + " [PLAYER]" + ChatColor.YELLOW + " [PLAYER]");
         addCommandExample(ChatColor.GREEN + "/tpv" + ChatColor.GOLD + " Njodi   " + ChatColor.YELLOW + " Player  " + ChatColor.WHITE + " -- Teleports Njodi to Player");
         setArgRange(2, 2);

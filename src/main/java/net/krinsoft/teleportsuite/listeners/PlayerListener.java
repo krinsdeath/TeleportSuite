@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -63,6 +64,12 @@ public class PlayerListener implements Listener {
         if (!event.getFrom().getWorld().equals(event.getTo().getWorld())) {
             plugin.getManager().setWorldLastKnown(event.getPlayer().getName(), event.getFrom());
         }
+    }
+
+    @EventHandler
+    void playerDeath(PlayerDeathEvent event) {
+        plugin.debug(event.getEntity().getName() + " died.");
+        plugin.getManager().getPlayer(event.getEntity().getName()).pushToStack(event.getEntity().getLocation());
     }
     
 }

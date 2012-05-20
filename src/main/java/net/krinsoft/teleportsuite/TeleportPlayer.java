@@ -32,7 +32,6 @@ public class TeleportPlayer {
     }
 
     private TeleportSuite plugin;
-    private Player ref;
     private String name;
     private List<TPDestination> stack = new ArrayList<TPDestination>();
     private List<Request> requests = new ArrayList<Request>();
@@ -44,8 +43,7 @@ public class TeleportPlayer {
     
     public TeleportPlayer(TeleportSuite plugin, String name) {
         this.plugin = plugin;
-        this.ref = plugin.getServer().getPlayer(name);
-        this.name = ref.getName();
+        this.name = plugin.getServer().getPlayer(name).getName();
         this.silent = plugin.getUsers().getBoolean(name + ".silent");
         this.language = plugin.getUsers().getString(name + ".language");
         if (this.language == null) {
@@ -57,14 +55,20 @@ public class TeleportPlayer {
         }
         this.status = Status.fromName(tmp);
         this.stack.clear();
+        pushToStack(plugin.getServer().getPlayer(name).getLocation());
+    }
+
+    public void clean() {
+        stack = null;
+        requests = null;
     }
     
     public Player getReference() {
-        return ref;
+        return plugin.getServer().getPlayer(name);
     }
     
     public boolean hasPermission(String node) {
-        boolean t = ref.hasPermission(node);
+        boolean t = plugin.getServer().getPlayer(name).hasPermission(node);
         if (!t) {
             sendLocalizedString("error.permission", node);
         }
@@ -109,7 +113,7 @@ public class TeleportPlayer {
         TPDestination tp = stack.remove(0);
         if (stack.isEmpty()) { return tp; }
         tp = stack.remove(0);
-        ref.teleport(tp.getLocation());
+        plugin.getServer().getPlayer(name).teleport(tp.getLocation());
         sendLocalizedString("teleport.tpback", getName());
         return tp;
     }
@@ -129,7 +133,7 @@ public class TeleportPlayer {
             list.add(stack.remove(0));
         }
         sendLocalizedString("teleport.tprewind", String.valueOf(places));
-        ref.teleport(list.get(list.size() - 1).getLocation());
+        plugin.getServer().getPlayer(name).teleport(list.get(list.size() - 1).getLocation());
         return list;
     }
 
@@ -139,15 +143,15 @@ public class TeleportPlayer {
      * @return A TPDestination object representing the player's previous location
      */
     public TPDestination teleport(Location location) {
-        TPDestination last = pushToStack(ref.getLocation());
-        ref.teleport(location);
+        TPDestination last = pushToStack(plugin.getServer().getPlayer(name).getLocation());
+        plugin.getServer().getPlayer(name).teleport(location);
         return last;
     }
     
     public void sendMessage(String message) {
         if (message == null) { return; }
         message = message.replaceAll("&([0-9A-Fa-f])", "\u00A7$1");
-        ref.sendMessage(message);
+        plugin.getServer().getPlayer(name).sendMessage(message);
     }
 
     /**
@@ -198,7 +202,7 @@ public class TeleportPlayer {
     }
     
     public Location getLocation() {
-        return ref.getLocation();
+        return plugin.getServer().getPlayer(name).getLocation();
     }
     
     public List<Request> getRequests() {

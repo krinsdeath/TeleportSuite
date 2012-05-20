@@ -9,13 +9,19 @@ import org.bukkit.Location;
 @SuppressWarnings("unused")
 public class TPDestination {
     private TeleportSuite plugin;
-    private Location location;
+    private String world;
+    private double x;
+    private double y;
+    private double z;
 
     public TPDestination(TeleportSuite plugin, String world, String loc) {
         this.plugin = plugin;
         String[] locs = loc.split(":");
         try {
-            location = new Location(plugin.getServer().getWorld(world), Double.parseDouble(locs[0]), Double.parseDouble(locs[1])+0.1, Double.parseDouble(locs[2]));
+            this.world = world;
+            this.x = Double.parseDouble(locs[0]);
+            this.y = Double.parseDouble(locs[1])+0.1;
+            this.z = Double.parseDouble(locs[2]);
         } catch (ArrayIndexOutOfBoundsException e) {
             plugin.debug("An error occurred while parsing a location string.");
         } catch (NumberFormatException e) {
@@ -27,23 +33,30 @@ public class TPDestination {
     
     public TPDestination(TeleportSuite plugin, Location loc) {
         this.plugin = plugin;
-        location = loc;
-        location.setY(location.getY()+0.1);
+        this.world = loc.getWorld().getName();
+        this.x = loc.getX();
+        this.y = loc.getY()+0.1;
+        this.z = loc.getZ();
     }
 
     public Location getLocation() {
-        return location;
+        return new Location(plugin.getServer().getWorld(world), x, y, z);
     }
     
     public void setDestination(Location loc) {
-        location = loc;
+        this.world = loc.getWorld().getName();
+        this.x = loc.getX();
+        this.y = loc.getY();
+        this.z = loc.getZ();
     }
     
     public void setDestination(String loc) {
         String[] locs = loc.split(":");
         try {
-            String world = locs[0];
-            location = new Location(plugin.getServer().getWorld(world), Double.parseDouble(locs[1]), Double.parseDouble(locs[2]), Double.parseDouble(locs[3]));
+            this.world = locs[0];
+            this.x = Double.parseDouble(locs[1]);
+            this.y = Double.parseDouble(locs[2]);
+            this.z = Double.parseDouble(locs[3]);
         } catch (ArrayIndexOutOfBoundsException e) {
             plugin.warn("An error occurred while parsing a location string.");
         } catch (NumberFormatException e) {
