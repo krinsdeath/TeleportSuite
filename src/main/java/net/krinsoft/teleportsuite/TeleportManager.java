@@ -41,6 +41,7 @@ public class TeleportManager {
     public TeleportPlayer unregister(String player) {
         TeleportPlayer p = players.remove(player);
         if (p != null) {
+            p.cancelRequest();
             p.save();
             p.clean();
             plugin.debug(p.getName() + " was unregistered.");

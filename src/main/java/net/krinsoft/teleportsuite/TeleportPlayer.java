@@ -149,9 +149,10 @@ public class TeleportPlayer {
     }
     
     public void sendMessage(String message) {
-        if (message == null) { return; }
+        Player p = plugin.getServer().getPlayer(name);
+        if (message == null || p == null) { return; }
         message = message.replaceAll("&([0-9A-Fa-f])", "\u00A7$1");
-        plugin.getServer().getPlayer(name).sendMessage(message);
+        p.sendMessage(message);
     }
 
     /**
