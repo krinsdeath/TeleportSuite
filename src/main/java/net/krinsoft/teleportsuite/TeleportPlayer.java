@@ -60,7 +60,9 @@ public class TeleportPlayer {
 
     public void clean() {
         stack = null;
-        requests = null;
+        for (Request r : new ArrayList<Request>(requests)) {
+            plugin.getManager().finish(r.getTo(), r, false);
+        }
     }
     
     public Player getReference() {
