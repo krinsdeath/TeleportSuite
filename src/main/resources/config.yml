@@ -3,6 +3,7 @@
 plugin:
   debug: false
   cooldowns: false
+  timeouts: false
   economy: false
 
 languages:
@@ -10,6 +11,10 @@ languages:
   - english
   default: english
 
+timeouts:
+  tpa: 30
+  tpahere: 30
+  
 cooldowns:
   tp: 30
   tpa: 60

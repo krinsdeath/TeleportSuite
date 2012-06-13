@@ -155,6 +155,12 @@ public class TeleportSuite extends JavaPlugin {
             getConfig().options().copyDefaults(true);
             saveConfig();
         }
+        if (getConfig().get("timeouts.tpa") == null) {
+            getConfig().set("plugin.timeouts", false);
+            getConfig().set("timeouts.tpa", 30);
+            getConfig().set("timeouts.tpahere", 30);
+            saveConfig();
+        }
 
         userFile = new File(getDataFolder(), "users.yml");
         if (!userFile.exists()) {
@@ -207,6 +213,10 @@ public class TeleportSuite extends JavaPlugin {
             }
         }
         for (Localization l : languages.values()) {
+            // 2.2 update - b97+
+            if (l.get("teleport.timeout") == null) {
+                l.update();
+            }
             l.save();
         }
     }

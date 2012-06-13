@@ -16,15 +16,21 @@ public class Request {
             return name().toLowerCase();
         }
     }
-    
+
+    long timeout;
     TeleportPlayer dest;
     Type type;
     
     public Request(TeleportPlayer player, Type request) {
+        this.timeout = System.currentTimeMillis();
         this.dest = player;
         this.type = request;
     }
-    
+
+    public long getDuration() {
+        return System.currentTimeMillis() - timeout;
+    }
+
     public TeleportPlayer getTo() { return this.dest; }
     
     public Type getType() { return this.type; }

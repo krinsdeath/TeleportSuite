@@ -32,6 +32,9 @@ teleport:
   requests:
     tpa: "&A[target] wants to teleport to you. (&B/accept [target]&A)"
     tpahere: "&A[target] wants you to teleport to them. (&B/accept [target]&A)"
+  timeout:
+    from: "&A[target]'s teleport request has &Ctimed out&A."
+    to: "&AYour request to &A[target] has &Ctimed out&A."
 
 status:
   silent:

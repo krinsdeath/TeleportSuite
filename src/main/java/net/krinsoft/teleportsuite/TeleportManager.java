@@ -110,18 +110,41 @@ public class TeleportManager {
             return;
         }
         if (val) {
-            from.sendLocalizedString("teleport.tpaccept", request.getTo().getName());
-            switch (request.getType()) {
-                // from -> to
-                case TPAHERE: executeTPA(from, request.getTo()); break;
-                case TPHERE: executeTP(from, request.getTo()); break;
-                case TPOHERE: executeTPO(from, request.getTo()); break;
-                // to -> from
-                case TPA: executeTPA(request.getTo(), from); break;
-                case TP: executeTP(request.getTo(), from); break;
-                case TPO: executeTPO(request.getTo(), from); break;
+            boolean timeout = false;
+            if (plugin.getConfig().getBoolean("plugin.timeouts", false)) {
+                switch (request.getType()) {
+                    case TPA:
+                        if (request.getDuration() >= plugin.getConfig().getDouble("timeouts.tpa", 30) * 1000) {
+                            from.sendLocalizedString("teleport.timeout.from", request.getTo().getName());
+                            request.getTo().sendLocalizedString("teleport.timeout.to", from.getName());
+                            timeout = true;
+                        }
+                        break;
+                    case TPAHERE:
+                        if (request.getDuration() >= plugin.getConfig().getDouble("timeouts.tpahere", 30) * 1000) {
+                            from.sendLocalizedString("teleport.timeout.from", request.getTo().getName());
+                            request.getTo().sendLocalizedString("teleport.timeout.to", from.getName());
+                            timeout = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
-            deductFunds(request.getTo(), request.getType().getName());
+            if (!timeout) {
+                from.sendLocalizedString("teleport.tpaccept", request.getTo().getName());
+                switch (request.getType()) {
+                    // from -> to
+                    case TPAHERE: executeTPA(from, request.getTo()); break;
+                    case TPHERE: executeTP(from, request.getTo()); break;
+                    case TPOHERE: executeTPO(from, request.getTo()); break;
+                    // to -> from
+                    case TPA: executeTPA(request.getTo(), from); break;
+                    case TP: executeTP(request.getTo(), from); break;
+                    case TPO: executeTPO(request.getTo(), from); break;
+                }
+                deductFunds(request.getTo(), request.getType().getName());
+            }
         } else {
             from.sendLocalizedString("teleport.tpreject", request.getTo().getName());
             request.getTo().sendLocalizedString("error.requests.rejected", from.getName());

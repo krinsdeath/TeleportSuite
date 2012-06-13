@@ -22,7 +22,19 @@ public class Localization {
         this.name = name;
         this.language = language;
     }
-    
+
+    public Object get(String key) {
+        return language.get(key, null);
+    }
+
+    public void update() {
+        if (plugin.getDescription().getVersion().startsWith("2.2")) {
+            language.set("teleport.timeout.to", "&AYour request to &A[target] has &Ctimed out&A.");
+            language.set("teleport.timeout.from", "&A[target]'s teleport request has &Ctimed out&A.");
+            plugin.debug("Updating '" + name + "' to Localization v2.2");
+        }
+    }
+
     public String get(String key, String token) {
         try {
             String replaced = language.getString(key);
