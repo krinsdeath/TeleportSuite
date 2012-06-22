@@ -164,8 +164,10 @@ public class TeleportPlayer {
      */
     public void sendLocalizedString(String key, String token) {
         String msg = plugin.getLocalization(language).get(key, token);
-        for (String line : msg.split("\n")) {
-            sendMessage(line);
+        if (msg != null && msg.length() > 0) {
+            for (String line : msg.split("\n")) {
+                sendMessage(line);
+            }
         }
     }
 
