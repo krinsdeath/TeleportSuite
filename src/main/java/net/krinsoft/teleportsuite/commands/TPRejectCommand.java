@@ -50,10 +50,12 @@ public class TPRejectCommand extends TeleportCommand {
                 }
                 return;
             } else {
-                if (p.getRequest(args.get(0)) != null) {
-                    r = p.getRequest(args.get(0));
+                CommandSender target = plugin.getServer().getPlayer(args.get(0));
+                if (target != null) {
+                    r = p.getRequest(target.getName());
                     if (r == null) {
                         p.sendLocalizedString("error.requests.failed", args.get(0));
+                        return;
                     }
                 }
             }
