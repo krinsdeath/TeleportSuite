@@ -6,11 +6,14 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author krinsdeath
  */
 public class TeleportPlayer {
+    private final static Pattern colors = Pattern.compile("&([0-9a-fA-F])");
+
     public enum Status {
         ACCEPTING,
         REJECTING,
@@ -150,11 +153,13 @@ public class TeleportPlayer {
         return last;
     }
     
-    public void sendMessage(String message) {
+    public void sendMessage(String... message) {
         Player p = plugin.getServer().getPlayer(name);
         if (message == null || p == null) { return; }
-        message = message.replaceAll("&([0-9A-Fa-f])", "\u00A7$1");
-        p.sendMessage(message);
+        for (String line : message) {
+            line = colors.matcher(line).replaceAll("\u00A7$1");
+            p.sendMessage(line);
+        }
     }
 
     /**
@@ -165,9 +170,7 @@ public class TeleportPlayer {
     public void sendLocalizedString(String key, String token) {
         String msg = plugin.getLocalization(language).get(key, token);
         if (msg != null && msg.length() > 0) {
-            for (String line : msg.split("\n")) {
-                sendMessage(line);
-            }
+            sendMessage(msg.split("\n"));
         }
     }
 
