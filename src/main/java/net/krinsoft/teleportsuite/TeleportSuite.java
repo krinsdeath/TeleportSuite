@@ -271,6 +271,8 @@ public class TeleportSuite extends JavaPlugin {
         commands.registerCommand(new TPVanillaCommand(this));
         commands.registerCommand(new TPWorldCommand(this));
         //commands.registerCommand(new TPGroupCommand(this));
+        commands.registerCommand(new TPMCommand(this));
+        commands.registerCommand(new TPMHereCommand(this));
     }
     
     public FileConfiguration getUsers() {

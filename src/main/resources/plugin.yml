@@ -30,6 +30,12 @@ commands:
   tpohere:
     description: Teleports the target directly to the sender, regardless of their status.
     usage: /<command> [player]
+  tpm:
+    description: Teleports one player to another using /tpa, but bypassing permissions.
+    usage: /<command> [player from] [player to]
+  tpmhere:
+    description: Teleports one player to another using /tpahere, but bypassing permissions.
+    usage: /<command> [player from] [player to]
   tpworld:
     aliases: [world, tpw]
     description: Teleports to your last known location in the specified world.
