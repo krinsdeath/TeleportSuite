@@ -51,7 +51,7 @@ public class PlayerListener implements Listener {
                 Math.round(p.getLocation().getY()) + " " +
                 Math.round(p.getLocation().getZ()) + ">";
         String message = event.getMessage();
-        message = message.replaceAll("\\[loc\\]", loc);
+        message = message.replaceAll("[\\[<](loc|pos)[>\\]]", loc);
         event.setMessage(message);
     }
     
@@ -60,9 +60,12 @@ public class PlayerListener implements Listener {
         if (event.isCancelled()) { return; }
         if (event.getFrom().equals(event.getTo())) { return; }
         plugin.debug(event.getPlayer().getName() + " teleported!");
-        plugin.getManager().getPlayer(event.getPlayer().getName()).pushToStack(event.getFrom());
-        if (!event.getFrom().getWorld().equals(event.getTo().getWorld())) {
-            plugin.getManager().setWorldLastKnown(event.getPlayer().getName(), event.getFrom());
+        TeleportPlayer p = plugin.getManager().getPlayer(event.getPlayer().getName());
+        if (p != null) {
+            p.pushToStack(event.getFrom());
+            if (!event.getFrom().getWorld().equals(event.getTo().getWorld())) {
+                plugin.getManager().setWorldLastKnown(event.getPlayer().getName(), event.getFrom());
+            }
         }
     }
 

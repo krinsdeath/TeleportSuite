@@ -66,4 +66,13 @@ public class TPDestination {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) { return false; }
+        if (o == this) { return true; }
+        if (o.getClass() != this.getClass()) { return false; }
+        TPDestination that = (TPDestination) o;
+        return (that.x == this.x && that.y == this.y && that.z == this.z && that.world.equals(this.world));
+    }
+
 }

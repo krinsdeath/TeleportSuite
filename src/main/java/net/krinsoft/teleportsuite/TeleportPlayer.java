@@ -102,6 +102,9 @@ public class TeleportPlayer {
      */
     public TPDestination pushToStack(Location loc) {
         TPDestination dest = new TPDestination(plugin, loc);
+        if (stack.size() > 0 && stack.get(0) != null && stack.get(0).equals(dest)) {
+            return dest;
+        }
         stack.add(0, dest);
         if (stack.size() > 5) {
             stack = stack.subList(0, 4);
