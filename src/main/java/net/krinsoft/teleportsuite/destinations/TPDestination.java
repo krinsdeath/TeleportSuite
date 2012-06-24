@@ -67,6 +67,18 @@ public class TPDestination {
     }
 
     @Override
+    public String toString() {
+        return "TPDestination{world=" + world + ",x=" + x + ",y=" + y +",z=" + z +"}";
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = hash * 17 + toString().hashCode();
+        return hash * 3;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null) { return false; }
         if (o == this) { return true; }
