@@ -98,6 +98,9 @@ commands:
     aliases: [coords, tpco]
     description: Shows the sender their current location
     usage: /<command>
+  tplang:
+    description: Allows a user to set their language.
+    usage: /<command> [language]
   ###########################
   # administrative commands #
   ###########################

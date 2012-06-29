@@ -1,0 +1,55 @@
+error:
+  permission: "&CWatashi ga shinai sono kyoka.. fushi: &B[target]"
+  invalid:
+    arguments: "&CFumei hikisu."
+    player: "&CShinai sonzai suru '[target]'."
+    world: "&CShinai sonzai suru '[target]'."
+    destination: "&CAtesaki tassei suru koto wa dekimasen."
+    request: "&CYokyu ga '&9NULL&C'; hokoku suru kudasai."
+    language: "&CThere is no such language available."
+  requests:
+    open: "&CYou can only request one teleport at a time."
+    rejected: "&C[target] rejected your request."
+    ignored: "&C[target] is not accepting requests."
+    canceled: "&C[target] canceled their request."
+    failed: "&CYou have no requests from [target]."
+    none: "&CYou have no open requests."
+
+teleport:
+  tp: "&A'[target]' wa, anata ni ido."
+  tpa: "&B'[target]' wa, anata ni ido."
+  tpo: "&D'[target]' wa, anata ni ido."
+  tphere: "&AAnata wa '[target]' ni ido." 
+  tpahere: "&BAnata wa '[target]' ni ido."
+  tpohere: "&DAnata wa '[target]' ni ido."
+  tpback: "&AUshiro iten."
+  tpworld: "&AAnata wa '[target]' ni tatte iru."
+  tpaccept: "&9'[target]' no yokyu wo anata &Aukeireru&9."
+  tpreject: "&9'[target]' no yokyu wo anata &Akyohi suru&9."
+  tpcancel: "&7'[target]' no yokyu wo anata &Atorikesu&7."
+  tprequest: "&6'[target]' wo anata no yokyu okuru."
+  tprewind: "&6Basho maki modosu &A[target]&6."
+  requests:
+    tpa: "&A'[target]' iten wo e? (&B/accept [target]&A)"
+    tpahere: "&A'[target]' wants you to teleport to them. (&B/accept [target]&A)"
+  timeout:
+    from: "&A[target]'s teleport request has &Ctimed out&A."
+    to: "&AYour request to &A[target] has &Ctimed out&A."
+
+status:
+  silent:
+    enabled: "&6You are now stealthed."
+    disabled: "&6You are no longer stealthed."
+  toggle:
+    default: accepting
+    accepting: "&9You will now be &Bprompted&9 to accept teleport requests."
+    rejecting: "&9You will automatically &Creject&9 all requests."
+    auto: "&9You will automatically &Aaccept&9 all requests."
+  requests:
+    open: "&9You have the following &Apending&9 requests: "
+    active: "&9You have sent a request to &A[target]&9."
+
+default:
+  name: "Romaji-Nihongo"
+  languages: "Shiyodekiru gengo:"
+  change: "Romaji-Nihongo gengo settei suru"

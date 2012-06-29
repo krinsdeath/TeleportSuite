@@ -33,6 +33,7 @@ public class TPMCommand extends TeleportCommand {
             sender.sendMessage(ChatColor.RED + "Both players must exist (and be online).");
             return;
         }
+        sender.sendMessage(ChatColor.GREEN + "Sent /tpa from " + from.getName() + " to " + to.getName());
         super.runTeleport(from, to.getName(), Request.Type.TPA);
     }
 }

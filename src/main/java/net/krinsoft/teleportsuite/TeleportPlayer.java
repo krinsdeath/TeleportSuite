@@ -44,9 +44,13 @@ public class TeleportPlayer {
     private boolean silent;
     private Status status;
     
-    public TeleportPlayer(TeleportSuite plugin, String name) {
+    public TeleportPlayer(TeleportSuite plugin, String p) {
         this.plugin = plugin;
-        this.name = plugin.getServer().getPlayer(name).getName();
+        Player player = plugin.getServer().getPlayer(p);
+        if (player == null) {
+            throw new NullPointerException("A player with the name '" + p + "' returned a null Player reference.");
+        }
+        this.name = player.getName();
         this.silent = plugin.getUsers().getBoolean(name + ".silent");
         this.language = plugin.getUsers().getString(name + ".language");
         if (this.language == null) {

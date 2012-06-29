@@ -7,6 +7,7 @@ error:
     destination: "&CThat destination is unreachable."
     request: "&CThe request was &9null&C; please report the error."
     language: "&CThere is no such language available."
+    target: "&CInvalid target."
   requests:
     open: "&CYou can only request one teleport at a time."
     rejected: "&C[target] rejected your request."

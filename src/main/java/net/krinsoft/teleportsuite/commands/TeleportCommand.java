@@ -61,6 +61,9 @@ public abstract class TeleportCommand extends Command {
         if (checked == null) { return; }
         TeleportPlayer from = manager.getPlayer(checked[0].getName());
         TeleportPlayer to = manager.getPlayer(checked[1].getName());
+        if (from.equals(to)) {
+            from.sendLocalizedString("error.invalid.target", checked[1].getName());
+        }
         manager.queue(from, to, type);
     }
 

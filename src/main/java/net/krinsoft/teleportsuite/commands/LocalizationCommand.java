@@ -35,7 +35,7 @@ public class LocalizationCommand extends TeleportCommand {
             player.sendLocalizedString("default.languages", null);
             for (String language : languages) {
                 String name = plugin.getLocalization(language).get("default.name", null);
-                player.sendMessage(language + ": " + name);
+                player.sendMessage(ChatColor.GREEN + "/tps lang " + language + ChatColor.WHITE + " - " + ChatColor.AQUA + name);
             }
         } else {
             if (languages.contains(args.get(0))) {
