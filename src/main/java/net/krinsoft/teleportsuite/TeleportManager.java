@@ -160,7 +160,9 @@ public class TeleportManager {
     }
     
     private void executeTP(TeleportPlayer from, TeleportPlayer to) {
-        to.sendLocalizedString("teleport.tp", from.getName());
+        if (!from.isSilent()) {
+            to.sendLocalizedString("teleport.tp", from.getName());
+        }
         from.sendLocalizedString("teleport.tphere", to.getName());
         teleport(from, to);
     }
