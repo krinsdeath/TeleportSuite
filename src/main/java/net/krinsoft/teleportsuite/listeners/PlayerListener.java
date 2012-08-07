@@ -9,7 +9,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -41,24 +40,22 @@ public class PlayerListener implements Listener {
         plugin.getManager().unregister(event.getPlayer().getName());
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     void playerChat(AsyncPlayerChatEvent event) {
-        if (event.isCancelled()) { return; }
         if (event.getPlayer() == null) { return; }
         Player p = event.getPlayer();
         String loc =
-                "<" + p.getLocation().getWorld().getName() + ":" +
-                Math.round(p.getLocation().getX()) + " " +
-                Math.round(p.getLocation().getY()) + " " +
+                "<" + p.getLocation().getWorld().getName() + "@x=" +
+                Math.round(p.getLocation().getX()) + ",y=" +
+                Math.round(p.getLocation().getY()) + ",z=" +
                 Math.round(p.getLocation().getZ()) + ">";
         String message = event.getMessage();
         message = message.replaceAll("[\\[<](loc|pos)[>\\]]", loc);
         event.setMessage(message);
     }
     
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     void playerTeleport(PlayerTeleportEvent event) {
-        if (event.isCancelled()) { return; }
         if (event.getFrom().equals(event.getTo())) { return; }
         plugin.debug(event.getPlayer().getName() + " teleported!");
         TeleportPlayer p = plugin.getManager().getPlayer(event.getPlayer().getName());
