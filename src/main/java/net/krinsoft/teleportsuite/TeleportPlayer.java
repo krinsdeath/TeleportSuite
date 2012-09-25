@@ -49,11 +49,12 @@ public class TeleportPlayer {
         this.plugin = plugin;
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(p);
         if (player == null) {
-            plugin.debug("Player reference null; possibly a Citizens NPC?");
+            plugin.debug("OfflinePlayer reference null; possibly a Citizens NPC?");
             return;
         }
         if (player.getPlayer() == null) {
-            throw new NullPointerException("A player with the name '" + p + "' returned a null Player reference.");
+            plugin.debug("A player with the name '" + p + "' returned a null Player reference.");
+            return;
         }
         this.name = player.getName();
         this.silent = plugin.getUsers().getBoolean(name + ".silent");
