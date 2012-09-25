@@ -2,6 +2,7 @@ package net.krinsoft.teleportsuite;
 
 import net.krinsoft.teleportsuite.destinations.TPDestination;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -46,8 +47,12 @@ public class TeleportPlayer {
     
     public TeleportPlayer(TeleportSuite plugin, String p) {
         this.plugin = plugin;
-        Player player = plugin.getServer().getPlayer(p);
+        OfflinePlayer player = plugin.getServer().getOfflinePlayer(p);
         if (player == null) {
+            plugin.debug("Player reference null; possibly a Citizens NPC?");
+            return;
+        }
+        if (player.getPlayer() == null) {
             throw new NullPointerException("A player with the name '" + p + "' returned a null Player reference.");
         }
         this.name = player.getName();
