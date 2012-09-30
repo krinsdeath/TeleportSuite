@@ -43,7 +43,7 @@ public class TeleportPlayer {
     private String request;
     private boolean requesting;
     private boolean silent;
-    private Status status;
+    private Status status = Status.ACCEPTING;
     
     public TeleportPlayer(TeleportSuite plugin, String p) {
         this.plugin = plugin;
@@ -67,6 +67,9 @@ public class TeleportPlayer {
             tmp = plugin.getLocalization(language).get("status.toggle.default", name);
         }
         this.status = Status.fromName(tmp);
+        if (this.status == null) {
+            this.status = Status.ACCEPTING;
+        }
         this.stack.clear();
         pushToStack(plugin.getServer().getPlayer(name).getLocation());
     }
