@@ -35,7 +35,7 @@ public class TeleportPlayer {
         }
     }
 
-    private TeleportSuite plugin;
+    private final TeleportSuite plugin;
     private String name;
     private List<TPDestination> stack = new ArrayList<TPDestination>();
     private List<Request> requests = new ArrayList<Request>();

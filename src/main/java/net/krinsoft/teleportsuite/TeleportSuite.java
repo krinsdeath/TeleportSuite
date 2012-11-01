@@ -62,6 +62,13 @@ public class TeleportSuite extends JavaPlugin {
         registerEvents();
         registerCommands();
         log("Enabled in " + (System.currentTimeMillis() - startup) + "ms.");
+
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            @Override
+            public void run() {
+                buildWorldPermissions();
+            }
+        }, 1L);
     }
 
     @Override
@@ -173,7 +180,11 @@ public class TeleportSuite extends JavaPlugin {
         
         debug = getConfig().getBoolean("plugin.debug");
         economy = getConfig().getBoolean("plugin.economy");
-        
+
+        buildWorldPermissions();
+    }
+
+    public void buildWorldPermissions() {
         Permission worlds = new Permission("teleport.world.*");
         worlds.setDescription("Any user with this node can access all worlds");
         worlds.setDefault(PermissionDefault.TRUE);
