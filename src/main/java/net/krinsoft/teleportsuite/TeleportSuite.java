@@ -4,7 +4,6 @@ import com.fernferret.allpay.AllPay;
 import com.fernferret.allpay.GenericBank;
 import com.pneumaticraft.commandhandler.CommandHandler;
 import net.krinsoft.teleportsuite.commands.*;
-import net.krinsoft.teleportsuite.listeners.EntityListener;
 import net.krinsoft.teleportsuite.listeners.PlayerListener;
 import net.krinsoft.teleportsuite.listeners.ServerListener;
 import org.bukkit.World;
@@ -45,7 +44,6 @@ public class TeleportSuite extends JavaPlugin {
 
     private GenericBank                 bank            = null;
     
-    private EntityListener              eListener       = new EntityListener(this);
     private PlayerListener              pListener       = new PlayerListener(this);
     private ServerListener              sListener       = new ServerListener(this);
     
@@ -76,7 +74,6 @@ public class TeleportSuite extends JavaPlugin {
         long disable = System.currentTimeMillis();
         commands = null;
         sListener = null;
-        eListener = null;
         pListener = null;
         bank = null;
         manager.disable();
@@ -243,9 +240,6 @@ public class TeleportSuite extends JavaPlugin {
     
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
-        
-        // entity events
-        pm.registerEvents(eListener, this);
         
         // player events
         pm.registerEvents(pListener, this);

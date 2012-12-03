@@ -114,6 +114,7 @@ public class TeleportPlayer {
      * @return The TPDestination representing the location we just pushed into the stack
      */
     public TPDestination pushToStack(Location loc) {
+        plugin.debug("Location: " + loc.getWorld().getName() + "{x=" + (int) loc.getX() + ",y=" + (int) loc.getY() + ",z=" + (int) loc.getZ() + "}");
         TPDestination dest = new TPDestination(plugin, loc);
         if (stack.size() > 0 && stack.get(0) != null && stack.get(0).equals(dest)) {
             return dest;
@@ -132,8 +133,6 @@ public class TeleportPlayer {
     public TPDestination rewind() {
         if (stack.isEmpty()) { return null; }
         TPDestination tp = stack.remove(0);
-        if (stack.isEmpty()) { return tp; }
-        tp = stack.remove(0);
         plugin.getServer().getPlayer(name).teleport(tp.getLocation());
         sendLocalizedString("teleport.tpback", getName());
         return tp;
