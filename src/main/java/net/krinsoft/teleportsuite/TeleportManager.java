@@ -1,5 +1,6 @@
 package net.krinsoft.teleportsuite;
 
+import net.krinsoft.teleportsuite.events.TeleportRequestEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -102,6 +103,7 @@ public class TeleportManager {
             }
             deductFunds(from, type.getName());
         }
+        plugin.getServer().getPluginManager().callEvent(new TeleportRequestEvent(to.getName(), from.getName(), type));
     }
 
     public void finish(TeleportPlayer from, Request request, boolean val) {
