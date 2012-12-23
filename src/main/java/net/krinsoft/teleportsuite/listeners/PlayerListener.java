@@ -3,6 +3,7 @@ package net.krinsoft.teleportsuite.listeners;
 import net.krinsoft.teleportsuite.Request;
 import net.krinsoft.teleportsuite.TeleportPlayer;
 import net.krinsoft.teleportsuite.TeleportSuite;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -45,11 +46,12 @@ public class PlayerListener implements Listener {
     void playerChat(AsyncPlayerChatEvent event) {
         if (event.getPlayer() == null) { return; }
         Player p = event.getPlayer();
+        Location l = p.getLocation();
         String loc =
-                "<" + p.getLocation().getWorld().getName() + "@x=" +
-                Math.round(p.getLocation().getX()) + ",y=" +
-                Math.round(p.getLocation().getY()) + ",z=" +
-                Math.round(p.getLocation().getZ()) + ">";
+                "<" + l.getWorld().getName() + "@x=" +
+                Math.round(l.getX()) + ",y=" +
+                Math.round(l.getY()) + ",z=" +
+                Math.round(l.getZ()) + ">";
         String message = event.getMessage();
         message = message.replaceAll("[\\[<](loc|pos)[>\\]]", loc);
         event.setMessage(message);

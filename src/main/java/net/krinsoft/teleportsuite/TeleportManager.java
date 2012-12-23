@@ -212,7 +212,6 @@ public class TeleportManager {
     public void setWorldLastKnown(String player, Location l) {
         String location = createLocationString(l);
         plugin.getUsers().set(player + "." + l.getWorld().getName(), location);
-        plugin.saveUsers();
     }
     
     public Location getWorldLastKnown(String player, String world) {
