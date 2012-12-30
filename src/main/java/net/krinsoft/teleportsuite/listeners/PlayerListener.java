@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,6 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * @author krinsdeath
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class PlayerListener implements Listener {
     private TeleportSuite plugin;
+    private final static Pattern position = Pattern.compile("[\\[<](loc|pos)[>\\]]");
     
     public PlayerListener(TeleportSuite plugin) {
         this.plugin = plugin;
@@ -53,7 +54,7 @@ public class PlayerListener implements Listener {
                 Math.round(l.getY()) + ",z=" +
                 Math.round(l.getZ()) + ">";
         String message = event.getMessage();
-        message = message.replaceAll("[\\[<](loc|pos)[>\\]]", loc);
+        message = position.matcher(message).replaceAll(loc);
         event.setMessage(message);
     }
     
