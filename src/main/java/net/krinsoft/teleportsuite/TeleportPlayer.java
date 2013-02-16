@@ -82,15 +82,22 @@ public class TeleportPlayer {
     }
     
     public Player getReference() {
-        return plugin.getServer().getPlayer(name);
+        try {
+            return plugin.getServer().getPlayer(name);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("An error occurred while fetching a player reference for '" + name + "'");
+        }
     }
     
     public boolean hasPermission(String node) {
-        boolean t = plugin.getServer().getPlayer(name).hasPermission(node);
-        if (!t) {
+        Player p = getReference();
+        if (p != null && !p.hasPermission(node)) {
             sendLocalizedString("error.permission", node);
+            return false;
+        } else if (p == null) {
+            return false;
         }
-        return t;
+        return true;
     }
 
     public String getName() {
