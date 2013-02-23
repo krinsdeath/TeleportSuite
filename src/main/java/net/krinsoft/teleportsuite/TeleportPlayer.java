@@ -128,7 +128,7 @@ public class TeleportPlayer {
         }
         stack.add(0, dest);
         if (stack.size() > 5) {
-            stack = stack.subList(0, 4);
+            stack.subList(5, stack.size()).clear();
         }
         return dest;
     }
@@ -179,7 +179,7 @@ public class TeleportPlayer {
         Player p = plugin.getServer().getPlayer(name);
         if (message == null || p == null) { return; }
         for (String line : message) {
-            line = colors.matcher(line).replaceAll("\u00A7$1");
+            line = colors.matcher(line).replaceAll("\u00A7kr5.66");
             p.sendMessage(line);
         }
     }
