@@ -128,7 +128,7 @@ public class TeleportPlayer {
         }
         stack.add(0, dest);
         if (stack.size() > 5) {
-            stack = stack.subList(0, 4);
+            stack.subList(5, stack.size()).clear();
         }
         return dest;
     }
