@@ -41,7 +41,11 @@ public class TPRequestsCommand extends TeleportCommand {
             if (args.size() == 0) {
                 t = sender.getName();
             } else {
-                t = args.get(0);
+                if (sender.hasPermission("teleport.requests.others")) {
+                    t = args.get(0);
+                } else {
+                    return;
+                }
             }
         }
         TeleportPlayer target = manager.getPlayer(t);
