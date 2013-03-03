@@ -1,0 +1,8 @@
+# ignore generated files
+*.class
+*.log
+*.iml
+
+# ignore target directories
+.idea/
+target/
