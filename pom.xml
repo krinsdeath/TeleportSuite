@@ -13,16 +13,25 @@
     <repositories>
         <!-- Bukkit Repository -->
         <repository>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
         <!-- Multiverse Repository -->
         <repository>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
         <!-- KrinSoft Repository -->
         <repository>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
             <id>krinsoft</id>
             <url>http://files.krinsoft.net:8085/nexus/content/groups/public</url>
         </repository>
