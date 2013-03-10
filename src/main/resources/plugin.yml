@@ -121,6 +121,8 @@ commands:
   # coming soon!
 
 permissions:
+  teleport.economy.bypass:
+    description: Allows the user to bypass economy costs for teleports.
   teleport.users:
     children:
       teleport.tpa: true

@@ -203,6 +203,9 @@ public class TeleportManager {
     
     private void deductFunds(TeleportPlayer p, String key) {
         if (plugin.getBank() != null) {
+            if (p.getReference().hasPermission("teleport.economy.bypass")) {
+                return;
+            }
             double amount = plugin.getConfig().getDouble("economy." + key);
             int curr = plugin.getConfig().getInt("economy.currency");
             plugin.getBank().take(p.getReference(), amount, curr);

@@ -43,7 +43,7 @@ public abstract class TeleportCommand extends Command {
     protected boolean verifyWallet(CommandSender sender, String type) {
         Player player = plugin.getServer().getPlayer(sender.getName());
         if (player == null) { return false; }
-        if (!economy) { return true; }
+        if (!economy || sender.hasPermission("teleport.economy.bypass")) { return true; }
         double amount = plugin.getConfig().getDouble("economy." + type, 0);
         if (plugin.getBank().hasEnough(player, amount, curr)) {
             plugin.debug("'" + player.getName() + "' has enough currency.");
