@@ -93,11 +93,11 @@ public class TeleportManager {
             }
             switch (type) {
                 // from -> to
-                case TP: executeTP(from, to); break;
-                case TPO: executeTPO(from, to); break;
+                case TP: executeTP(from, to, false); break;
+                case TPO: executeTPO(from, to, false); break;
                 // to -> from
-                case TPHERE: executeTP(to, from); break;
-                case TPOHERE: executeTPO(to, from); break;
+                case TPHERE: executeTP(to, from, true); break;
+                case TPOHERE: executeTPO(to, from, true); break;
                 // default?
                 default: return;
             }
@@ -138,12 +138,12 @@ public class TeleportManager {
                 switch (request.getType()) {
                     // from -> to
                     case TPAHERE: executeTPA(from, request.getTo()); break;
-                    case TPHERE: executeTP(from, request.getTo()); break;
-                    case TPOHERE: executeTPO(from, request.getTo()); break;
+                    case TPHERE: executeTP(from, request.getTo(), true); break;
+                    case TPOHERE: executeTPO(from, request.getTo(), true); break;
                     // to -> from
                     case TPA: executeTPA(request.getTo(), from); break;
-                    case TP: executeTP(request.getTo(), from); break;
-                    case TPO: executeTPO(request.getTo(), from); break;
+                    case TP: executeTP(request.getTo(), from, false); break;
+                    case TPO: executeTPO(request.getTo(), from, false); break;
                 }
                 deductFunds(request.getTo(), request.getType().getName());
             }
@@ -161,16 +161,16 @@ public class TeleportManager {
         teleport(from, to);
     }
     
-    private void executeTP(TeleportPlayer from, TeleportPlayer to) {
-        if (!from.isSilent()) {
+    private void executeTP(TeleportPlayer from, TeleportPlayer to, boolean here) {
+        if (!from.isSilent() || here) {
             to.sendLocalizedString("teleport.tp", from.getName());
         }
         from.sendLocalizedString("teleport.tphere", to.getName());
         teleport(from, to);
     }
     
-    private void executeTPO(TeleportPlayer from, TeleportPlayer to) {
-        if (!from.isSilent()) {
+    private void executeTPO(TeleportPlayer from, TeleportPlayer to, boolean here) {
+        if (!from.isSilent() || here) {
             to.sendLocalizedString("teleport.tpo", from.getName());
         }
         from.sendLocalizedString("teleport.tpohere", to.getName());
