@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.permissions.PermissionDefault;
 
 import java.util.List;
@@ -35,7 +36,14 @@ public class TPLocationCommand extends TeleportCommand {
     @Override
     public void runCommand(CommandSender sender, List<String> args) {
         if (sender instanceof ConsoleCommandSender) { return; }
-        TeleportPlayer player = plugin.getManager().getPlayer(sender.getName());
+        String senderName;
+        if (sender instanceof BlockCommandSender) {
+            senderName = args.get(0);
+            args.remove(0);
+        } else { 
+            senderName = sender.getName();
+        }
+        TeleportPlayer player = plugin.getManager().getPlayer(senderName);
         World world = player.getLocation().getWorld(); 
         if (args.size() == 4) {
             if (plugin.getServer().getWorld(args.get(3)) != null) {
