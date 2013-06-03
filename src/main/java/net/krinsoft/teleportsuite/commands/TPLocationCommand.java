@@ -23,7 +23,7 @@ public class TPLocationCommand extends TeleportCommand {
         setCommandUsage(  ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " x   y   z  " + ChatColor.YELLOW + " [WORLD]");
         addCommandExample(ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " 15  75  99 ");
         addCommandExample(ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " 131 55  63 " + ChatColor.YELLOW + " world  ");
-        setArgRange(3, 4);
+        setArgRange(3, 5);
         addKey("teleport location");
         addKey("tps location");
         addKey("tplocation");
