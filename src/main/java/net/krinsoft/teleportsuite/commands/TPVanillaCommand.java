@@ -41,5 +41,10 @@ public class TPVanillaCommand extends TeleportCommand {
             return;
         }
         from.teleport(to);
+        sender.sendMessage("Teleported " + from.getName() + " to " + to.getName());
+        if (!from.getPlayer().equals(sender)) {
+            from.sendMessage("Teleported to " + to.getName());
+        }
+        to.sendMessage(from.getName() + " teleported to you");
     }
 }
