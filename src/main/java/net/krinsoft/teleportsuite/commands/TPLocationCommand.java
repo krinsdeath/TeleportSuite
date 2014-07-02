@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.permissions.PermissionDefault;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class TPLocationCommand extends TeleportCommand {
         setCommandUsage(  ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " x   y   z  " + ChatColor.YELLOW + " [WORLD]");
         addCommandExample(ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " 15  75  99 ");
         addCommandExample(ChatColor.GREEN + "/tploc" + ChatColor.GOLD + " 131 55  63 " + ChatColor.YELLOW + " world  ");
-        setArgRange(3, 4);
+        setArgRange(3, 5);
         addKey("teleport location");
         addKey("tps location");
         addKey("tplocation");
@@ -35,7 +36,14 @@ public class TPLocationCommand extends TeleportCommand {
     @Override
     public void runCommand(CommandSender sender, List<String> args) {
         if (sender instanceof ConsoleCommandSender) { return; }
-        TeleportPlayer player = plugin.getManager().getPlayer(sender.getName());
+        String senderName;
+        if (sender instanceof BlockCommandSender) {
+            senderName = args.get(0);
+            args.remove(0);
+        } else { 
+            senderName = sender.getName();
+        }
+        TeleportPlayer player = plugin.getManager().getPlayer(senderName);
         World world = player.getLocation().getWorld(); 
         if (args.size() == 4) {
             if (plugin.getServer().getWorld(args.get(3)) != null) {
